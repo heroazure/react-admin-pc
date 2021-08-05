@@ -1,0 +1,13 @@
+export declare const isOO: (obj: any) => boolean
+export declare const isObj: (obj: any) => boolean
+export declare const isPlainObj: (obj: any) => boolean
+export declare const isFunc: (obj: any) => boolean
+export declare const isNum: (obj: any, isStrict?: boolean) => boolean
+export declare const isStr: (obj: any) => boolean
+export declare const isBool: (obj: any) => boolean
+export declare const isArr: (obj: any) => boolean
+export declare const isUNN: (obj: any) => boolean
+export declare const isEmptyObj: (obj: any) => boolean
+export declare const isEmptyArr: (obj: any) => boolean
+export declare const isPromise: (obj: any) => boolean
+export declare const isColor: (obj: any) => boolean

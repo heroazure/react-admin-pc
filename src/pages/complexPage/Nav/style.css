@@ -1,0 +1,10 @@
+.nav {
+    display: flex;
+    width: 200px;
+    height: 40px;
+    line-height: 40px;
+}
+.nav > li {
+    flex: 1;
+    list-style: none;
+}
