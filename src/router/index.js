@@ -7,6 +7,8 @@ import {
 import PrivateRoute from '../pages/login/privateRoute'
 const Home = lazy(() => import("../pages/home"))
 const ComplexPage = lazy(() => import("../pages/complexPage"))
+const MyList = lazy(() => import("../pages/mylist"))
+
 const NotFound = lazy(() => import("../pages/notfound"))
 
 export default function RouterView() {
@@ -18,6 +20,9 @@ export default function RouterView() {
                 </PrivateRoute>
                 <PrivateRoute path="/complexPage">
                     <ComplexPage/>
+                </PrivateRoute>
+                <PrivateRoute path="/mylist">
+                    <MyList/>
                 </PrivateRoute>
                 <Route path="*">
                     <NotFound/>

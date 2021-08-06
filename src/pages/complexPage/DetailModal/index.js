@@ -1,7 +1,7 @@
 import React from "react"
 import { Modal } from 'antd'
 import store from "./store"
-import {observer, useLocalObservable} from "mobx-react-lite"
+import {observer} from "mobx-react-lite"
 
 export default observer(() => {
     const {visible, loading, detail, handleOk, handleCancel} = store

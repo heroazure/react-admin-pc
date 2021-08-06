@@ -3,7 +3,6 @@ import {Link, useLocation} from "react-router-dom"
 import {Layout, Menu} from 'antd'
 import {
     UserOutlined,
-    VideoCameraOutlined,
     UploadOutlined,
 } from '@ant-design/icons'
 import style from './style.module.scss'
@@ -15,8 +14,8 @@ const {Sider, Content} = Layout
 
 const menus = [
     {key: '1', path: '/', name: 'Home', icon: <UserOutlined/>},
-    // {key: '2', path: '/about', name: 'About', icon: <VideoCameraOutlined/>},
-    {key: '4', path: '/complexPage', name: '复杂页面示例', icon: <UploadOutlined/>}
+    {key: '2', path: '/complexPage', name: '复杂页面示例', icon: <UploadOutlined/>},
+    {key: '3', path: '/mylist', name: '表格示例', icon: <UploadOutlined/>}
 ]
 
 export default observer((props) => {
