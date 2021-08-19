@@ -2,8 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
-import 'antd/dist/antd.css';
-import './index.css';
+import 'antd/dist/antd.less';
+import './index.less';
 import App from './App'
 
 ReactDOM.render(

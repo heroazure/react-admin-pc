@@ -3,7 +3,7 @@ import {observer} from "mobx-react-lite"
 import Table from '../table'
 import store, {tableStore} from './store'
 import columns from './columns'
-import SearchBar from '../../components/SearchBar'
+import SearchBar from '@/components/SearchBar'
 import moment from 'moment'
 import { DatePicker, Select, Button } from 'antd'
 const { Option } = Select
@@ -13,6 +13,7 @@ export default observer(() => {
     return (
         <>
             <p>uuid: {tableStore.$extraData.uuid}</p>
+            <p>PUBLIC_URL: {process.env.PUBLIC_URL}</p>
             <SearchBar
                 store={tableStore}
                 triggerSearchItems={['date', 'status']}

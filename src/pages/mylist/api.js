@@ -1,11 +1,11 @@
-import http from '../../common/http/mock'
+import http from '../../common/http'
 import {v4} from 'uuid'
 
 export default {
     getList (data) {
         return http({
-            url: '/about/us/info',
-            mock: {
+            url: '/api/about/us/info',
+            /*mock: {
                 list: [
                     {
                         "key": "1",
@@ -48,7 +48,7 @@ export default {
                 ],
                 total: 4,
                 uuid: v4()
-            }
+            }*/
         })
     }
 }
