@@ -33,9 +33,6 @@ class Store {
     }
 
     signOut = (cb) => {
-        // setTimeout(() => {
-        //
-        // }, 100)
         this.userAuth = {
             isAuthenticated: false,
             user: null

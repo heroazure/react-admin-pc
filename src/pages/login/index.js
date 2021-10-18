@@ -34,8 +34,6 @@ export default observer((props) => {
                         placeholder="密码"
                         prefix={<UserOutlined/>}
                     />
-                    {/*<p>{store.userAuth.user}你需要登陆，然后进入该页：{from.pathname}</p>*/}
-                    {/*<button onClick={login}>登陆</button>*/}
                     <Button type="primary" size="large" onClick={login} block>登录</Button>
                 </Space>
             </Card>
