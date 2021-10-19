@@ -4441,6 +4441,13 @@ dom-serializer@0:
     domelementtype "^2.0.1"
     entities "^2.0.0"
 
+dom7@^4.0.0:
+  version "4.0.0"
+  resolved "http://npm-reg.devops.ichoice.cc/dom7/-/dom7-4.0.0.tgz#69c8fb9b170c92d64f385fdc37f81456e82b80a1"
+  integrity sha1-acj7mxcMktZPOF/cN/gUVugrgKE=
+  dependencies:
+    ssr-window "^4.0.0"
+
 domain-browser@^1.1.1:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/domain-browser/-/domain-browser-1.2.0.tgz#3d31f50191a6749dd1375a7f522e823d42e54eda"
@@ -11075,6 +11082,11 @@ sshpk@^1.7.0:
     safer-buffer "^2.0.2"
     tweetnacl "~0.14.0"
 
+ssr-window@^4.0.0:
+  version "4.0.0"
+  resolved "http://npm-reg.devops.ichoice.cc/ssr-window/-/ssr-window-4.0.0.tgz#4ee82fc360c5f88a022f321740bcfec59ada1a61"
+  integrity sha1-Tugvw2DF+IoCLzIXQLz+xZraGmE=
+
 ssri@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/ssri/-/ssri-6.0.1.tgz#2a3c41b28dd45b62b63676ecb74001265ae9edd8"
@@ -11399,6 +11411,14 @@ svgo@^1.0.0, svgo@^1.2.2:
     stable "^0.1.8"
     unquote "~1.1.1"
     util.promisify "~1.0.0"
+
+swiper@^7.0.9:
+  version "7.0.9"
+  resolved "http://npm-reg.devops.ichoice.cc/swiper/-/swiper-7.0.9.tgz#61d2cb64c759f1cc3bf85dd924dd46614a8d4795"
+  integrity sha1-YdLLZMdZ8cw7+F3ZJN1GYUqNR5U=
+  dependencies:
+    dom7 "^4.0.0"
+    ssr-window "^4.0.0"
 
 symbol-tree@^3.2.4:
   version "3.2.4"

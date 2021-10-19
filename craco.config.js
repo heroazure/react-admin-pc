@@ -12,31 +12,31 @@ module.exports = {
             "@": resolve("src"),
         }
     },
-    style: {
-        postcss: {
-            loaderOptions: {
-                ident: 'postcss',
-                plugins: () => [
-                    require('postcss-px-to-viewport')({
-                        unitToConvert: 'px',
-                        viewportWidth: 3750,
-                        unitPrecision: 5,
-                        propList: ['*'],
-                        viewportUnit: 'rem',
-                        fontViewportUnit: 'rem',
-                        selectorBlackList: ['.ignore'],
-                        minPixelValue: 1,
-                        mediaQuery: false,
-                        replace: true,
-                        exclude: [],
-                        landscape: false,
-                        landscapeUnit: 'rem',
-                        landscapeWidth: 640,
-                    })
-                ],
-            },
-        }
-    },
+    // style: {
+    //     postcss: {
+    //         loaderOptions: {
+    //             ident: 'postcss',
+    //             plugins: () => [
+    //                 require('postcss-px-to-viewport')({
+    //                     unitToConvert: 'px',
+    //                     viewportWidth: 3750,
+    //                     unitPrecision: 5,
+    //                     propList: ['*'],
+    //                     viewportUnit: 'rem',
+    //                     fontViewportUnit: 'rem',
+    //                     selectorBlackList: ['.ignore'],
+    //                     minPixelValue: 1,
+    //                     mediaQuery: false,
+    //                     replace: true,
+    //                     exclude: [],
+    //                     landscape: false,
+    //                     landscapeUnit: 'rem',
+    //                     landscapeWidth: 640,
+    //                 })
+    //             ],
+    //         },
+    //     }
+    // },
     plugins: [
         {
             plugin: CracoLessPlugin,
