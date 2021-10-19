@@ -4,11 +4,8 @@ import store from "./store"
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react"
 // Import Swiper styles
-import "swiper/css"
-import "swiper/css/navigation"
-import "swiper/css/thumbs"
+import "swiper/swiper.min.css"
 import './style.less'
-import v1 from 'uuid'
 
 // import Swiper core and required modules
 import SwiperCore, {
@@ -27,8 +24,11 @@ export default observer(() => {
         <>
             <Swiper
                 style={{'--swiper-navigation-color': '#fff','--swiper-pagination-color': '#fff'}}
-                loop={true}
+                loop={false}
                 spaceBetween={10}
+                centeredSlides={true}
+                slidesPerView={2}
+                initialSlide={1}
                 navigation={true}
                 thumbs={{ swiper: thumbsSwiper }}
                 className="mySwiper2">
