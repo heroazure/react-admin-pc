@@ -17,51 +17,47 @@ SwiperCore.use([Navigation,Thumbs])
 
 export default observer(() => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null)
+    const {images} = store
     // useEffect(async () => {
     //     await store.getData()
     // }, [])
     return (
-        <>
+        <div className='surprise-container'>
+            <div className='barrage-pane'></div>
             <Swiper
                 style={{'--swiper-navigation-color': '#fff','--swiper-pagination-color': '#fff'}}
-                loop={false}
-                spaceBetween={10}
+                loop={true}
+                spaceBetween={60}
                 centeredSlides={true}
                 slidesPerView={2}
                 initialSlide={1}
                 navigation={false}
                 thumbs={{ swiper: thumbsSwiper }}
-                className="mySwiper2">
-                <SwiperSlide><img src="https://swiperjs.com/demos/images/nature-1.jpg" /></SwiperSlide>
-                <SwiperSlide><img src="https://swiperjs.com/demos/images/nature-2.jpg" /></SwiperSlide>
-                <SwiperSlide><img src="https://swiperjs.com/demos/images/nature-3.jpg" /></SwiperSlide>
-                <SwiperSlide><img src="https://swiperjs.com/demos/images/nature-4.jpg" /></SwiperSlide>
-                <SwiperSlide><img src="https://swiperjs.com/demos/images/nature-5.jpg" /></SwiperSlide>
-                <SwiperSlide><img src="https://swiperjs.com/demos/images/nature-6.jpg" /></SwiperSlide>
-                <SwiperSlide><img src="https://swiperjs.com/demos/images/nature-7.jpg" /></SwiperSlide>
-                <SwiperSlide><img src="https://swiperjs.com/demos/images/nature-8.jpg" /></SwiperSlide>
-                <SwiperSlide><img src="https://swiperjs.com/demos/images/nature-9.jpg" /></SwiperSlide>
-                <SwiperSlide><img src="https://swiperjs.com/demos/images/nature-10.jpg" /></SwiperSlide>
+                className="bigSwiper">
+                {images.map(item => (
+                    <SwiperSlide><img src={item} alt='奖品图' /></SwiperSlide>
+                ))}
             </Swiper>
             <Swiper
                 onSwiper={setThumbsSwiper}
                 loop={true}
                 spaceBetween={10}
-                slidesPerView={4}
+                centeredSlides={true}
+                slidesPerView={6}
+                initialSlide={2}
                 freeMode={true}
                 watchSlidesProgress={true}
-                className="mySwiper">
-                <SwiperSlide><img src="https://swiperjs.com/demos/images/nature-1.jpg" /></SwiperSlide>
-                <SwiperSlide><img src="https://swiperjs.com/demos/images/nature-2.jpg" /></SwiperSlide>
-                <SwiperSlide><img src="https://swiperjs.com/demos/images/nature-3.jpg" /></SwiperSlide>
-                <SwiperSlide><img src="https://swiperjs.com/demos/images/nature-4.jpg" /></SwiperSlide>
-                <SwiperSlide><img src="https://swiperjs.com/demos/images/nature-5.jpg" /></SwiperSlide>
-                <SwiperSlide><img src="https://swiperjs.com/demos/images/nature-6.jpg" /></SwiperSlide>
-                <SwiperSlide><img src="https://swiperjs.com/demos/images/nature-7.jpg" /></SwiperSlide>
-                <SwiperSlide><img src="https://swiperjs.com/demos/images/nature-8.jpg" /></SwiperSlide>
-                <SwiperSlide><img src="https://swiperjs.com/demos/images/nature-9.jpg" /></SwiperSlide>
-                <SwiperSlide><img src="https://swiperjs.com/demos/images/nature-10.jpg" /></SwiperSlide>
+                navigation={false}
+                className="smallSwiper">
+                {images.map(item => (
+                    <SwiperSlide><img src={item} alt='奖品图' /></SwiperSlide>
+                ))}
             </Swiper>
-        </>
+            <input type='text' placeholder='Input Surprise Code' className='surprise-input' />
+            <div className='surprise-submit-pane'>
+                <button className='surprise-submit'>REDEEM</button>
+                <span className='surprise-submit-price'>My Price></span>
+            </div>
+        </div>
     )
 })

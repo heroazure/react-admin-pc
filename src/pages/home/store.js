@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 import Api from './Api'
+import xbox from './images/xbox.png'
 class Store {
     visible = false
     constructor() {
@@ -10,6 +11,9 @@ class Store {
         this.visible = false
     }
 
+    images = [
+        xbox,xbox,xbox,xbox,xbox,xbox,xbox,xbox,xbox,xbox
+    ]
     getData = async () => {
         const data = await Api.getList()
         console.log('getList:', data)
