@@ -50,18 +50,18 @@ module.exports = {
             },
         }
     ],
-    // babel: {
-    //     plugins: [
-    //         [
-    //             'import',
-    //             {
-    //                 'libraryName': 'antd',
-    //                 'libraryDirectory': 'es',
-    //                 'style': 'css'
-    //             }
-    //         ]
-    //     ]
-    // },
+    babel: {
+        plugins: [
+            [
+                'import',
+                {
+                    'libraryName': 'antd-mobile',
+                    'libraryDirectory': 'es',
+                    'style': 'css'
+                }
+            ]
+        ]
+    },
     devServer: {
         proxy: {
             "/api": {

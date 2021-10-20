@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from 'react'
 import {TransitionGroup, CSSTransition} from 'react-transition-group'
+import {Modal} from 'antd-mobile'
 import {v4} from 'uuid'
 import './style.less'
+// import 'antd-mobile/lib/modal/style/index.less'
 
 const defaultList = [
     {content: '我是内容1', id: v4()},
@@ -32,6 +34,7 @@ export default function ({data}) {
         }, 2000)
         return () => clearInterval(inter)
     }, [])
+    const [visible, setVisible] = useState(false)
     return <div className='barrage-container'>
         <div className='barrage'>
             <TransitionGroup>
@@ -44,5 +47,18 @@ export default function ({data}) {
                 ))}
             </TransitionGroup>
         </div>
+        <button onClick={() => setVisible(true)}>popup</button>
+        <Modal
+            popup
+            closable
+            visible={visible}
+            onClose={() => {setVisible(false)}}
+            animationType="slide-up"
+            afterClose={() => { console.log('afterClose') }}
+        >
+            <div style={{height: 300}}>
+                我是内容
+            </div>
+        </Modal>
     </div>
 }
