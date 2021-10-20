@@ -1,29 +1,44 @@
 import React, {useState, useEffect} from 'react'
 import {observer} from "mobx-react-lite"
+import {Modal} from "antd-mobile"
 import store from "./store"
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react"
 // Import Swiper styles
 import "swiper/swiper.min.css"
 import './style.less'
+import Barrage from './Barrage'
+import Empty from './Empty'
+import Surprise from './Surprise'
 
 // import Swiper core and required modules
 import SwiperCore, {
     Navigation, Thumbs
 } from 'swiper'
+import close from "./images/close.png"
+import kong from "./images/kong.png"
 
 // install Swiper modules
 SwiperCore.use([Navigation,Thumbs])
 
 export default observer(() => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null)
-    const {images} = store
+    const [visiblePrice, setVisiblePrice] = useState(false)
+    const [isEmpty, setIsEmpty] = useState(false)
+    const {images, showSurprise, priceList, onSubmit, onCloseSurprise} = store
     // useEffect(async () => {
     //     await store.getData()
     // }, [])
+    if (isEmpty) {
+        return <div className='surprise-container'>
+            <Empty />
+        </div>
+    }
     return (
         <div className='surprise-container'>
-            <div className='barrage-pane'></div>
+            <div className='barrage-pane'>
+                <Barrage />
+            </div>
             <Swiper
                 style={{'--swiper-navigation-color': '#fff','--swiper-pagination-color': '#fff'}}
                 loop={true}
@@ -55,9 +70,45 @@ export default observer(() => {
             </Swiper>
             <input type='text' placeholder='Input Surprise Code' className='surprise-input' />
             <div className='surprise-submit-pane'>
-                <button className='surprise-submit'>REDEEM</button>
-                <span className='surprise-submit-price'>My Price></span>
+                <button className='surprise-submit' onClick={onSubmit}>REDEEM</button>
+                <span className='surprise-submit-price' onClick={() => setVisiblePrice(true)}>My Price></span>
             </div>
+            <Modal
+                popup
+                visible={visiblePrice}
+                onClose={() => {setVisiblePrice(false)}}
+                animationType="slide-up"
+                afterClose={() => { console.log('afterClose') }}
+            >
+                <div className='modal-price-header'>
+                    <div className='modal-price-header__title'>My Price</div>
+                    <span><img onClick={() => {setVisiblePrice(false)}} className='modal-price-header__close' src={close} alt="close"/></span>
+                </div>
+                <div className='modal-price-list'>
+                    {!!priceList.length && priceList.map(item => (
+                        <div className='price-item'>
+                            <div className='price-item-left'>
+                                <div className='price-item-left__img'></div>
+                                <div className='price-item-left__cnt'>
+                                    <p className='p1'>2021/1/1 14:00:00</p>
+                                    <p className='p2'>10SAR Coupon <span>2 left</span></p>
+                                    <p className='p3'>Code：KIJH3897</p>
+                                </div>
+                            </div>
+                            <div className='price-item-right'>
+                                <div className='price-item-right__btn'>USE IT</div>
+                                <p>Available before</p>
+                                <p>1/1/2022</p>
+                            </div>
+                        </div>
+                    ))}
+                    {!priceList.length && <div className='empty-price'>
+                        <img src={kong} alt="kong"/>
+                        <div>My price list is empty</div>
+                    </div>}
+                </div>
+            </Modal>
+            {showSurprise && <Surprise onClose={onCloseSurprise}/>}
         </div>
     )
 })

@@ -1,0 +1,75 @@
+.surprise-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  color: #fff;
+  padding-top: 50px;
+  z-index: 1000;
+  text-align: center;
+  &-content {
+    height: 375px;
+    width: 375px;
+    background: url("./bg2.png") no-repeat;
+    background-size: 100% 100%;
+    padding-top: 144px;
+    position: relative;
+    &__img1 {
+      display: block;
+      height: 80px;
+      width: auto;
+      margin: 0 auto;
+    }
+    &__name {
+      width: 128px;
+      height: 32px;
+      line-height: 32px;
+      border-radius: 2px;
+      margin: 30px auto;
+      background: linear-gradient(294deg, #E88D47 0%, #EFA26A 100%);
+      box-shadow: 1px 1px 3px 0 rgba(255, 255, 255, 0.5);
+      font-size: 14px;
+      color: #fff;
+      text-align: center;
+    }
+    &__surprise {
+      position: absolute;
+      font-size: 30px;
+      line-height: 45px;
+      text-align: center;
+      bottom: 0;
+      width: 100%;
+    }
+  }
+  &__title1 {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 30px;
+    margin: 10px 0 20px;
+  }
+  &__btn {
+    display: inline-block;
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    font-weight: 600;
+    height: 49px;
+    width: 157px;
+    border-radius: 25px;
+    background: url("../images/button.png") no-repeat;
+    background-size: 100% 100%;
+    border: none;
+  }
+  &__close {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    bottom: 33px;
+  }
+}
+

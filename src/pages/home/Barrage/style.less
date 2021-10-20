@@ -1,0 +1,42 @@
+@height: 24px;
+@itemMarginBottom: 6px;
+@trueHeight: @height + @itemMarginBottom;
+.barrage {
+  width: 100%;
+  padding-top: @trueHeight;
+  height: @trueHeight * 3;
+  overflow: hidden;
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  &-item {
+    display: inline-block;
+    height: @height;
+    line-height: @height;
+    padding: 0 10px;
+    border-radius: 12px;
+    background-color: rgba(0,0,0,.7);
+    color: #fff;
+    font-size: 11px;
+    margin-bottom: @itemMarginBottom;
+  }
+}
+
+.transition-item-enter {
+  margin-top: @trueHeight;
+  opacity: 0;
+}
+.transition-item-enter-active {
+  margin-top: 0;
+  opacity: 1;
+  transition: margin-top 300ms ease, opacity 300ms ease;
+}
+.transition-item-exit {
+  margin-top: 0;
+  opacity: 1;
+}
+.transition-item-exit-active {
+  margin-top: -@trueHeight;
+  opacity: 0;
+  transition: margin-top 300ms ease, opacity 300ms ease;
+}
