@@ -15,7 +15,7 @@ export default function RouterView() {
                 <Route exact path="/">
                     <Home/>
                 </Route>
-                <Route path="/download">
+                <Route path="/download/:language">
                     <Download/>
                 </Route>
                 <Route path="*">
