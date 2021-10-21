@@ -26,9 +26,9 @@ export default observer(() => {
     const [visiblePrice, setVisiblePrice] = useState(false)
     const [isEmpty, setIsEmpty] = useState(false)
     const {images, showSurprise, priceList, onSubmit, onCloseSurprise} = store
-    // useEffect(async () => {
-    //     await store.getData()
-    // }, [])
+    useEffect(async () => {
+        await store.getBlindBoxConfig()
+    }, [])
     if (isEmpty) {
         return <div className='surprise-container'>
             <Empty />

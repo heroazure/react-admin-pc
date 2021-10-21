@@ -1,53 +1,36 @@
 import http from '@/common/http'
 
 export default {
-    getList (data) {
+    // 获取盲盒配置信息
+    getBlindBoxConfig (data) {
         return http({
-            url: '/api/about/us/info',
-            /*mock: {
-                list: [
-                    {
-                        "key": "1",
-                        "name": "John Brown",
-                        "age": 32,
-                        "address": "New York No. 1 Lake Park",
-                        "tags": [
-                            "nice",
-                            "developer"
-                        ]
-                    },
-                    {
-                        "key": "2",
-                        "name": "Jim Green",
-                        "age": 42,
-                        "address": "London No. 1 Lake Park",
-                        "tags": [
-                            "loser"
-                        ]
-                    },
-                    {
-                        "key": "3",
-                        "name": "Joe Black",
-                        "age": 32,
-                        "address": "Sidney No. 1 Lake Park",
-                        "tags": [
-                            "cool",
-                            "teacher"
-                        ]
-                    },
-                    {
-                        "key": "4",
-                        "name": "Jim Green",
-                        "age": 42,
-                        "address": "London No. 1 Lake Park",
-                        "tags": [
-                            "loser"
-                        ]
-                    }
-                ],
-                total: 4,
-                uuid: v4()
-            }*/
+            url: '/api/v1/blindBox/getBlindBoxConfig',
+            method: 'post',
+            data
+        })
+    },
+    // 获取用户兑换记录
+    queryUserSurpriseList (data) {
+        return http({
+            url: '/api/v1/blindBox/queryUserSurpriseList',
+            method: 'post',
+            data
+        })
+    },
+    // 获取国家中奖记录
+    queryRegionSurpriseList (data) {
+        return http({
+            url: '/api/v1/blindBox/queryRegionSurpriseList',
+            method: 'post',
+            data
+        })
+    },
+    // 兑换奖项
+    redeemCode (data) {
+        return http({
+            url: '/api/v1/blindBox/redeemCode',
+            method: 'post',
+            data
         })
     }
 }

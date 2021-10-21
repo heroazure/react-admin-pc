@@ -15,8 +15,8 @@ class Store {
     images = [
         xbox,xbox,xbox,xbox,xbox,xbox,xbox,xbox,xbox,xbox
     ]
-    getData = async () => {
-        const data = await Api.getList()
+    getBlindBoxConfig = async () => {
+        const data = await Api.getBlindBoxConfig()
         console.log('getList:', data)
     }
 

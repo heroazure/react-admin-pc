@@ -65,7 +65,7 @@ module.exports = {
     devServer: {
         proxy: {
             "/api": {
-                target: "https://admin.yunshanggroup.cn",
+                target: "http://139.159.97.212:8020/",
                 changeOrigin: true,
                 // pathRewrite: {
                 //     "^/api": ""
