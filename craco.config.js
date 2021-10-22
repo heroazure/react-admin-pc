@@ -10,7 +10,16 @@ module.exports = {
     webpack: {
         alias: {
             "@": resolve("src"),
-        }
+        },
+        configure: (webpackConfig, {env, paths}) => {
+            paths.appBuild = 'blindbox'
+            webpackConfig.output = {
+                ...webpackConfig.output,
+                path: resolve('blindbox'),
+                publicPath: process.env.NODE_ENV === 'development' ? '/' : '/blindbox/'
+            }
+            return webpackConfig
+        },
     },
     style: {
         postcss: {

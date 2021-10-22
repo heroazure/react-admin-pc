@@ -26,11 +26,14 @@ export default observer(() => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null)
     const [visiblePrice, setVisiblePrice] = useState(false)
     const [isEmpty, setIsEmpty] = useState(false)
-    const {images, showSurprise, priceList, onSubmit, onCloseSurprise} = store
+    const {images, showSurprise, priceList, barrageList, onSubmit, onCloseSurprise, setSearch} = store
     const location = useLocation()
     const search = new URLSearchParams(location.search)
-    useEffect(async () => {
-        await store.getBlindBoxConfig({countryId: search.get('countryId'), languageId: search.get('languageId')})
+    useEffect(() => {
+        setSearch({countryId: search.get('countryId'), languageId: search.get('languageId')})
+        store.getBlindBoxConfig()
+        store.getBarrage()
+        store.getRecordList()
     }, [])
     if (isEmpty) {
         return <div className='surprise-container'>
@@ -40,7 +43,7 @@ export default observer(() => {
     return (
         <div className='surprise-container'>
             <div className='barrage-pane'>
-                <Barrage />
+                <Barrage data={barrageList} />
             </div>
             <Swiper
                 style={{'--swiper-navigation-color': '#fff','--swiper-pagination-color': '#fff'}}

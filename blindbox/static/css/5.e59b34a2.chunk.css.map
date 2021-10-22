@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/pages/download/style.less"],"names":[],"mappings":"AAAA,cACE,aAAA,CACA,YAAA,CACA,WAAA,CACA,gBACF","file":"5.e59b34a2.chunk.css","sourcesContent":[".download-img {\n  display: block;\n  height: 100vh;\n  width: 100vw;\n  object-fit: cover;\n}\n\n@primary-color: #1DA57A;"]}
