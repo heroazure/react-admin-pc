@@ -15,9 +15,9 @@ class Store {
     images = [
         xbox,xbox,xbox,xbox,xbox,xbox,xbox,xbox,xbox,xbox
     ]
-    getBlindBoxConfig = async () => {
-        const data = await Api.getBlindBoxConfig()
-        console.log('getList:', data)
+    getBlindBoxConfig = async (params) => {
+        const {data} = await Api.getBlindBoxConfig(params)
+        console.log('getBlindBoxConfig:', data)
     }
 
     showSurprise = false

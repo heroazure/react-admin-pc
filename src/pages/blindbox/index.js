@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import {useLocation} from "react-router-dom"
 import {observer} from "mobx-react-lite"
 import {Modal} from "antd-mobile"
 import store from "./store"
@@ -26,8 +27,10 @@ export default observer(() => {
     const [visiblePrice, setVisiblePrice] = useState(false)
     const [isEmpty, setIsEmpty] = useState(false)
     const {images, showSurprise, priceList, onSubmit, onCloseSurprise} = store
+    const location = useLocation()
+    const search = new URLSearchParams(location.search)
     useEffect(async () => {
-        await store.getBlindBoxConfig()
+        await store.getBlindBoxConfig({countryId: search.get('countryId'), languageId: search.get('languageId')})
     }, [])
     if (isEmpty) {
         return <div className='surprise-container'>
@@ -49,8 +52,8 @@ export default observer(() => {
                 navigation={false}
                 thumbs={{ swiper: thumbsSwiper }}
                 className="bigSwiper">
-                {images.map(item => (
-                    <SwiperSlide><img src={item} alt='奖品图' /></SwiperSlide>
+                {images.map((item, index) => (
+                    <SwiperSlide key={index}><img src={item} alt='奖品图' /></SwiperSlide>
                 ))}
             </Swiper>
             <Swiper
@@ -64,8 +67,8 @@ export default observer(() => {
                 watchSlidesProgress={true}
                 navigation={false}
                 className="smallSwiper">
-                {images.map(item => (
-                    <SwiperSlide><img src={item} alt='奖品图' /></SwiperSlide>
+                {images.map((item, index) => (
+                    <SwiperSlide key={index}><img src={item} alt='奖品图' /></SwiperSlide>
                 ))}
             </Swiper>
             <input type='text' placeholder='Input Surprise Code' className='surprise-input' />
@@ -85,8 +88,8 @@ export default observer(() => {
                     <span><img onClick={() => {setVisiblePrice(false)}} className='modal-price-header__close' src={close} alt="close"/></span>
                 </div>
                 <div className='modal-price-list'>
-                    {!!priceList.length && priceList.map(item => (
-                        <div className='price-item'>
+                    {!!priceList.length && priceList.map((item, index) => (
+                        <div className='price-item' key={index}>
                             <div className='price-item-left'>
                                 <div className='price-item-left__img'></div>
                                 <div className='price-item-left__cnt'>
