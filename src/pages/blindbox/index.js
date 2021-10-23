@@ -25,8 +25,7 @@ SwiperCore.use([Navigation,Thumbs])
 export default observer(() => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null)
     const [visiblePrice, setVisiblePrice] = useState(false)
-    const [isEmpty, setIsEmpty] = useState(false)
-    const {images, showSurprise, priceList, barrageList, onSubmit, onCloseSurprise, setSearch} = store
+    const {images, showSurprise, priceList, barrageList, isSupport, onSubmit, onCloseSurprise, setSearch} = store
     const location = useLocation()
     const search = new URLSearchParams(location.search)
     useEffect(() => {
@@ -35,7 +34,7 @@ export default observer(() => {
         store.getBarrage()
         store.getRecordList()
     }, [])
-    if (isEmpty) {
+    if (!isSupport) {
         return <div className='surprise-container'>
             <Empty />
         </div>

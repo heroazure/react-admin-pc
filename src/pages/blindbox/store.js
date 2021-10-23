@@ -12,8 +12,11 @@ class Store {
     images = [
         xbox,xbox,xbox,xbox,xbox,xbox,xbox,xbox,xbox,xbox
     ]
+    isSupport = true
     getBlindBoxConfig = async () => {
         const {data} = await Api.getBlindBoxConfig(this.search)
+        document.title = data.title || ''
+        this.isSupport = data.isSupport !== 0
         console.log('getBlindBoxConfig:', data)
     }
 
@@ -39,7 +42,7 @@ class Store {
     recordList = []
     // 获取兑换记录
     getRecordList = async () => {
-        const {data} = await Api.queryUserSurpriseList(this.search)
+        const {data} = await Api.queryUserSurpriseList({...this.search, userId: '111'})
         this.recordList = (data || [])
     }
 

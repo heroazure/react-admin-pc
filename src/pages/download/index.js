@@ -9,13 +9,13 @@ import fayu from './images/fayu.jpg'
 import ayu from './images/ayu.jpg'
 export default function () {
     const {language} = useParams()
-    const map = {
-        '1': xibolai,
+    const map = {//
+        '1': ayu,
         '2': yingyu,
-        '3': xibanya,
-        '4': putaoya,
-        '5': fayu,
-        '6': ayu,
+        '3': fayu,
+        '4': xibanya,
+        '5': xibolai,
+        '8': putaoya,
     }
     const toDownload = () => {
         const isIos = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
