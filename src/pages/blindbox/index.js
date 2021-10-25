@@ -40,11 +40,11 @@ export default observer(() => {
         store.getBarrage()
         store.getRecordList()
     }, [])
-    // if (!isSupport) {
-    //     return <div className='surprise-container'>
-    //         <Empty />
-    //     </div>
-    // }
+    if (!isSupport) {
+        return <div className='surprise-container'>
+            <Empty />
+        </div>
+    }
     return (
         <div className='surprise-container'>
             <div className='barrage-pane'>
