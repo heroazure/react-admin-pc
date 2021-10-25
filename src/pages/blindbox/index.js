@@ -25,20 +25,18 @@ SwiperCore.use([Navigation,Thumbs])
 
 export default observer(() => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null)
-    const [visiblePrice, setVisiblePrice] = useState(false)
-    const {surpriseList, showSurprise, priceList, barrageList, isSupport, surpriseCode,
+    const {surpriseList, showSurprise, recordList, barrageList, isSupport, surpriseCode, showMyPrice, toggleMyPrice, onClickMyPrice,
         onSubmit, onCloseSurprise, setSearch, onChangeCode, initUserInfo} = store
     const location = useLocation()
     const search = new URLSearchParams(location.search)
     useEffect(() => {
+        setSearch({countryId: search.get('countryId'), languageId: search.get('languageId')})
         // 注入登陆基本信息
-        initUserInfo()
+        initUserInfo(search.get('userInfo'))
     }, [])
     useEffect(() => {
-        setSearch({countryId: search.get('countryId'), languageId: search.get('languageId')})
         store.getBlindBoxConfig()
         store.getBarrage()
-        store.getRecordList()
     }, [])
     if (!isSupport) {
         return <div className='surprise-container'>
@@ -61,7 +59,11 @@ export default observer(() => {
                 thumbs={{ swiper: thumbsSwiper }}
                 className="bigSwiper">
                 {surpriseList.map((item, index) => (
-                    <SwiperSlide key={index}><img src={xbox} alt='奖品图' /></SwiperSlide>
+                    <SwiperSlide key={index}>
+                        <img className='bigSwiper__bg' src={xbox} alt='奖品图' />
+                        <img className='bigSwiper__surImg' src={item.surpriseImg} alt={item.surpriseName}/>
+                        <span className='bigSwiper__surName'>{item.surpriseName}</span>
+                    </SwiperSlide>
                 ))}
             </Swiper>
             <Swiper
@@ -76,34 +78,36 @@ export default observer(() => {
                 navigation={false}
                 className="smallSwiper">
                 {surpriseList.map((item, index) => (
-                    <SwiperSlide key={index}><img src={xbox} alt='奖品图' /></SwiperSlide>
+                    <SwiperSlide key={index}>
+                        <img className='smallSwiper__bg' src={item.surpriseImg} alt={item.surpriseName} />
+                    </SwiperSlide>
                 ))}
             </Swiper>
             <input type='text' placeholder='Input Surprise Code' value={surpriseCode} onChange={onChangeCode} className='surprise-input' />
             <div className='surprise-submit-pane'>
                 <button className='surprise-submit' onClick={onSubmit}>REDEEM</button>
-                <span className='surprise-submit-price' onClick={() => setVisiblePrice(true)}>My Price></span>
+                <span className='surprise-submit-price' onClick={onClickMyPrice}>My Price></span>
             </div>
             <Modal
                 popup
-                visible={visiblePrice}
-                onClose={() => {setVisiblePrice(false)}}
+                visible={showMyPrice}
+                onClose={toggleMyPrice}
                 animationType="slide-up"
                 afterClose={() => { console.log('afterClose') }}
             >
                 <div className='modal-price-header'>
                     <div className='modal-price-header__title'>My Price</div>
-                    <span><img onClick={() => {setVisiblePrice(false)}} className='modal-price-header__close' src={close} alt="close"/></span>
+                    <span><img onClick={toggleMyPrice} className='modal-price-header__close' src={close} alt="close"/></span>
                 </div>
                 <div className='modal-price-list'>
-                    {!!priceList.length && priceList.map((item, index) => (
+                    {!!recordList.length && recordList.map((item, index) => (
                         <div className='price-item' key={index}>
                             <div className='price-item-left'>
                                 <div className='price-item-left__img'></div>
                                 <div className='price-item-left__cnt'>
                                     <p className='p1'>2021/1/1 14:00:00</p>
-                                    <p className='p2'>10SAR Coupon <span>2 left</span></p>
-                                    <p className='p3'>Code：KIJH3897</p>
+                                    <p className='p2'>{item.prizeName} <span>{item.availableNumber} left</span></p>
+                                    <p className='p3'>Code：{item.surpriseCode}</p>
                                 </div>
                             </div>
                             <div className='price-item-right'>
@@ -113,7 +117,7 @@ export default observer(() => {
                             </div>
                         </div>
                     ))}
-                    {!priceList.length && <div className='empty-price'>
+                    {!recordList.length && <div className='empty-price'>
                         <img src={kong} alt="kong"/>
                         <div>My price list is empty</div>
                     </div>}

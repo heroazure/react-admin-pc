@@ -15,7 +15,7 @@ class Store {
     surpriseList = []
     isSupport = true
     getBlindBoxConfig = async () => {
-        const {data} = await Api.getBlindBoxConfig(this.search)
+        const {data} = await Api.getBlindBoxConfig(this.getParams())
         window.document.title = data?.title || ''
         this.isSupport = data.isSupport !== 0
         this.surpriseList = data.surpriseList || []
@@ -27,14 +27,11 @@ class Store {
         this.showSurprise = false
     }
 
-    priceList = [{}, {}, {}, {}, {}, {}]
     surpriseCode = ''
     onSubmit = async () => {
         const {data, code, message} = await Api.redeemCode({
-            ...this.userInfo,
-            ...this.search,
-            surpriseCode: this.surpriseCode,
-            userId: '111'
+            ...this.getParams(),
+            surpriseCode: this.surpriseCode
         })
         if (code !== 200) {
             // 未登陆的情况
@@ -51,14 +48,23 @@ class Store {
     barrageList = []
     // 获取弹幕信息
     getBarrage = async () => {
-        const {data} = await Api.queryRegionSurpriseList(this.search)
+        const {data} = await Api.queryRegionSurpriseList(this.getParams())
         this.barrageList = (data || []).map(item => ({ id: v4(), content: `${item.userName}  ${item.prizeName} * ${item.totalNumber || 1}` }))
+    }
+
+    getParams = () => {
+        const obj = {
+            ...this.userInfo
+        }
+        if (this.search.countryId) obj.countryId = this.search.countryId
+        if (this.search.languageId) obj.languageId = this.search.languageId
+        return obj
     }
 
     recordList = []
     // 获取兑换记录
     getRecordList = async () => {
-        const {data, code, message} = await Api.queryUserSurpriseList({...this.userInfo, ...this.search, userId: '111'})
+        const {data, code, message} = await Api.queryUserSurpriseList({...this.getParams(), userId: '111'})
         if (code !== 200) {
             // 未登陆的情况
             if (code === 1009) {
@@ -79,11 +85,27 @@ class Store {
     }
 
     userInfo = {}
-    initUserInfo = () => {
-        window.getUserInfo = (res) => {
-            console.log(res)
-            this.userInfo = res
+    initUserInfo = (res) => {
+        try {
+            this.userInfo = JSON.parse(res)
+        } catch (e) {
+            this.userInfo = {}
         }
+        Toast.info(res, 5)
+        // window.getUserInfo = (res) => {
+        //     this.userInfo = JSON.parse(res)
+        //     Toast.info('countryId:' + this.userInfo.countryId, 5)
+        // }
+    }
+
+    showMyPrice = false
+    onClickMyPrice = async () => {
+        this.showMyPrice = true
+        await this.getRecordList()
+    }
+
+    toggleMyPrice = () => {
+        this.showMyPrice = !this.showMyPrice
     }
 
     handleUnLogin = () => {
