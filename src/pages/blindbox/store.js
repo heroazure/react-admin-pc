@@ -12,11 +12,13 @@ class Store {
     images = [
         xbox,xbox,xbox,xbox,xbox,xbox,xbox,xbox,xbox,xbox
     ]
+    surpriseList = []
     isSupport = true
     getBlindBoxConfig = async () => {
         const {data} = await Api.getBlindBoxConfig(this.search)
         window.document.title = data?.title || ''
         this.isSupport = data.isSupport !== 0
+        this.surpriseList = data.surpriseList || []
         console.log('getBlindBoxConfig:', data)
     }
 

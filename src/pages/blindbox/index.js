@@ -3,6 +3,7 @@ import {useLocation} from "react-router-dom"
 import {observer} from "mobx-react-lite"
 import {Modal} from "antd-mobile"
 import store from "./store"
+import xbox from './images/xbox.png'
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react"
 // Import Swiper styles
@@ -25,7 +26,7 @@ SwiperCore.use([Navigation,Thumbs])
 export default observer(() => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null)
     const [visiblePrice, setVisiblePrice] = useState(false)
-    const {images, showSurprise, priceList, barrageList, isSupport, surpriseCode,
+    const {surpriseList, showSurprise, priceList, barrageList, isSupport, surpriseCode,
         onSubmit, onCloseSurprise, setSearch, onChangeCode, initUserInfo} = store
     const location = useLocation()
     const search = new URLSearchParams(location.search)
@@ -59,8 +60,8 @@ export default observer(() => {
                 navigation={false}
                 thumbs={{ swiper: thumbsSwiper }}
                 className="bigSwiper">
-                {images.map((item, index) => (
-                    <SwiperSlide key={index}><img src={item} alt='奖品图' /></SwiperSlide>
+                {surpriseList.map((item, index) => (
+                    <SwiperSlide key={index}><img src={xbox} alt='奖品图' /></SwiperSlide>
                 ))}
             </Swiper>
             <Swiper
@@ -74,8 +75,8 @@ export default observer(() => {
                 watchSlidesProgress={true}
                 navigation={false}
                 className="smallSwiper">
-                {images.map((item, index) => (
-                    <SwiperSlide key={index}><img src={item} alt='奖品图' /></SwiperSlide>
+                {surpriseList.map((item, index) => (
+                    <SwiperSlide key={index}><img src={xbox} alt='奖品图' /></SwiperSlide>
                 ))}
             </Swiper>
             <input type='text' placeholder='Input Surprise Code' value={surpriseCode} onChange={onChangeCode} className='surprise-input' />
