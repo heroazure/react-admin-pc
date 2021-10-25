@@ -14,11 +14,13 @@ class Store {
     ]
     surpriseList = []
     isSupport = true
+    descImg = ''
     getBlindBoxConfig = async () => {
         const {data} = await Api.getBlindBoxConfig(this.getParams())
         window.document.title = data?.title || ''
         this.isSupport = data.isSupport !== 0
         this.surpriseList = data.surpriseList || []
+        this.descImg = data.imageUrl
         console.log('getBlindBoxConfig:', data)
     }
 
@@ -28,6 +30,7 @@ class Store {
     }
 
     surpriseCode = ''
+    surpriseResult = {}
     onSubmit = async () => {
         const {data, code, message} = await Api.redeemCode({
             ...this.getParams(),
@@ -40,8 +43,8 @@ class Store {
             }
             return Toast.info(message || '未知异常', 2)
         }
-        console.log(data)
         this.showSurprise = true
+        this.surpriseResult = data
         // Toast.info('Your code is not recognized', 2)
     }
 
@@ -102,6 +105,15 @@ class Store {
     onClickMyPrice = async () => {
         this.showMyPrice = true
         await this.getRecordList()
+    }
+
+    adList = []
+    singleImg = {}
+    getAdByCode = async () => {
+        const res1 = await Api.getAdByCode({...this.getParams(), code: 'SIBone'})
+        this.adList = res1.data || []
+        const res2 = await Api.getAdByCode({...this.getParams(), code: 'SIBtwo'})
+        this.singleImg = res2.data[0] || {}
     }
 
     toggleMyPrice = () => {

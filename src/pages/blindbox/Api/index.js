@@ -32,5 +32,13 @@ export default {
             method: 'post',
             data
         })
+    },
+    // 获取广告位
+    getAdByCode (data) {
+        return http({
+            url: '/common/getAdByCode',
+            method: 'post',
+            data
+        })
     }
 }

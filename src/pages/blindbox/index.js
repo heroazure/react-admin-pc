@@ -25,7 +25,8 @@ SwiperCore.use([Navigation,Thumbs])
 
 export default observer(() => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null)
-    const {surpriseList, showSurprise, recordList, barrageList, isSupport, surpriseCode, showMyPrice, toggleMyPrice, onClickMyPrice,
+    const {surpriseList, showSurprise, recordList, barrageList, descImg, adList, singleImg, surpriseResult,
+        isSupport, surpriseCode, showMyPrice, toggleMyPrice, onClickMyPrice,
         onSubmit, onCloseSurprise, setSearch, onChangeCode, initUserInfo} = store
     const location = useLocation()
     const search = new URLSearchParams(location.search)
@@ -37,6 +38,7 @@ export default observer(() => {
     useEffect(() => {
         store.getBlindBoxConfig()
         store.getBarrage()
+        store.getAdByCode()
     }, [])
     if (!isSupport) {
         return <div className='surprise-container'>
@@ -88,6 +90,24 @@ export default observer(() => {
                 <button className='surprise-submit' onClick={onSubmit}>REDEEM</button>
                 <span className='surprise-submit-price' onClick={onClickMyPrice}>My Price></span>
             </div>
+            <div className='adSwiper-wrap'>
+                <Swiper
+                    loop={true}
+                    navigation={false}
+                    className="adSwiper">
+                    {adList.map((item, index) => (
+                        <SwiperSlide key={index}>
+                            <img src={item.adImgUrl} alt={item.title}/>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            </div>singleImg
+            <div className='adSwiper-wrap'>
+                <img src={singleImg.adImgUrl} alt={singleImg.title}/>
+            </div>
+            <div className='desc-pane'>
+                <img src={descImg} alt='描述'/>
+            </div>
             <Modal
                 popup
                 visible={showMyPrice}
@@ -123,7 +143,7 @@ export default observer(() => {
                     </div>}
                 </div>
             </Modal>
-            {showSurprise && <Surprise onClose={onCloseSurprise}/>}
+            {showSurprise && <Surprise value={surpriseResult} onClose={onCloseSurprise}/>}
         </div>
     )
 })
