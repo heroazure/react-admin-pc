@@ -37,13 +37,7 @@ class Store {
         if (code !== 200) {
             // 未登陆的情况
             if (code === 1009) {
-                // 在app内的情况，调用原生交互跳原生登陆页面
-                if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.toLogin) {
-                    window.webkit.messageHandlers.toLogin.postMessage('toLogin')
-                } else {
-                    this.toAppOrDownload()
-                }
-                return
+                return this.handleUnLogin()
             }
             return Toast.info(message || '未知异常', 2)
         }
@@ -62,7 +56,14 @@ class Store {
     recordList = []
     // 获取兑换记录
     getRecordList = async () => {
-        const {data} = await Api.queryUserSurpriseList({...this.search, userId: '111'})
+        const {data, code, message} = await Api.queryUserSurpriseList({...this.userInfo, ...this.search, userId: '111'})
+        if (code !== 200) {
+            // 未登陆的情况
+            if (code === 1009) {
+                return this.handleUnLogin()
+            }
+            return Toast.info(message || '未知异常', 2)
+        }
         this.recordList = (data || [])
     }
 
@@ -83,15 +84,24 @@ class Store {
         }
     }
 
+    handleUnLogin = () => {
+        // 在app内的情况，调用原生交互跳原生登陆页面
+        if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.toLogin) {
+            window.webkit.messageHandlers.toLogin.postMessage('toLogin')
+        } else {
+            this.toAppOrDownload()
+        }
+    }
+
     // 跳转app/下载页
     toAppOrDownload = () => {
         if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
             var loadDateTime = new Date();
-            window.location = "...";//schema链接或者universal link
+            window.location = "chicpoint://";//schema链接或者universal link
             window.setTimeout(function() { //如果没有安装app,便会执行setTimeout跳转下载页
                 var timeOutDateTime = new Date();
                 if (timeOutDateTime - loadDateTime < 5000) {
-                    window.location = "..."; //ios下载地址
+                    window.$history.push('/download')
                 } else {
                     window.close();
                 }
@@ -100,9 +110,9 @@ class Store {
         } else if (navigator.userAgent.match(/android/i)) {
             var state = null;
             try {
-                window.location = '...'; //schema链接或者universal link
+                window.location = 'chicpoint://'; // schema链接或者universal link
                 window.setTimeout(function() {
-                    window.location = "..."; //android下载地址
+                    window.$history.push('/download')
                 }, 500);
             } catch (e) {}
         }
