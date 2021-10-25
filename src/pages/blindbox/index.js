@@ -25,20 +25,25 @@ SwiperCore.use([Navigation,Thumbs])
 export default observer(() => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null)
     const [visiblePrice, setVisiblePrice] = useState(false)
-    const {images, showSurprise, priceList, barrageList, isSupport, onSubmit, onCloseSurprise, setSearch} = store
+    const {images, showSurprise, priceList, barrageList, isSupport, surpriseCode,
+        onSubmit, onCloseSurprise, setSearch, onChangeCode, initUserInfo} = store
     const location = useLocation()
     const search = new URLSearchParams(location.search)
+    useEffect(() => {
+        // 注入登陆基本信息
+        initUserInfo()
+    }, [])
     useEffect(() => {
         setSearch({countryId: search.get('countryId'), languageId: search.get('languageId')})
         store.getBlindBoxConfig()
         store.getBarrage()
         store.getRecordList()
     }, [])
-    if (!isSupport) {
-        return <div className='surprise-container'>
-            <Empty />
-        </div>
-    }
+    // if (!isSupport) {
+    //     return <div className='surprise-container'>
+    //         <Empty />
+    //     </div>
+    // }
     return (
         <div className='surprise-container'>
             <div className='barrage-pane'>
@@ -73,7 +78,7 @@ export default observer(() => {
                     <SwiperSlide key={index}><img src={item} alt='奖品图' /></SwiperSlide>
                 ))}
             </Swiper>
-            <input type='text' placeholder='Input Surprise Code' className='surprise-input' />
+            <input type='text' placeholder='Input Surprise Code' value={surpriseCode} onChange={onChangeCode} className='surprise-input' />
             <div className='surprise-submit-pane'>
                 <button className='surprise-submit' onClick={onSubmit}>REDEEM</button>
                 <span className='surprise-submit-price' onClick={() => setVisiblePrice(true)}>My Price></span>

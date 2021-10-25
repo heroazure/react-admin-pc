@@ -15,7 +15,7 @@ class Store {
     isSupport = true
     getBlindBoxConfig = async () => {
         const {data} = await Api.getBlindBoxConfig(this.search)
-        document.title = data.title || ''
+        window.document.title = data?.title || ''
         this.isSupport = data.isSupport !== 0
         console.log('getBlindBoxConfig:', data)
     }
@@ -26,10 +26,30 @@ class Store {
     }
 
     priceList = [{}, {}, {}, {}, {}, {}]
+    surpriseCode = ''
     onSubmit = async () => {
-        // const {data} = await Api.queryRegionSurpriseList(this.search)
+        const {data, code, message} = await Api.redeemCode({
+            ...this.userInfo,
+            ...this.search,
+            surpriseCode: this.surpriseCode,
+            userId: '111'
+        })
+        if (code !== 200) {
+            // 未登陆的情况
+            if (code === 1009) {
+                // 在app内的情况，调用原生交互跳原生登陆页面
+                if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.toLogin) {
+                    window.webkit.messageHandlers.toLogin.postMessage('toLogin')
+                } else {
+                    this.toAppOrDownload()
+                }
+                return
+            }
+            return Toast.info(message || '未知异常', 2)
+        }
+        console.log(data)
         this.showSurprise = true
-        Toast.info('Your code is not recognized', 2)
+        // Toast.info('Your code is not recognized', 2)
     }
 
     barrageList = []
@@ -49,6 +69,43 @@ class Store {
     search = {}
     setSearch = (search) => {
         this.search = search
+    }
+
+    onChangeCode = (e) => {
+        this.surpriseCode = e.target.value
+    }
+
+    userInfo = {}
+    initUserInfo = () => {
+        window.getUserInfo = (res) => {
+            console.log(res)
+            this.userInfo = res
+        }
+    }
+
+    // 跳转app/下载页
+    toAppOrDownload = () => {
+        if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
+            var loadDateTime = new Date();
+            window.location = "...";//schema链接或者universal link
+            window.setTimeout(function() { //如果没有安装app,便会执行setTimeout跳转下载页
+                var timeOutDateTime = new Date();
+                if (timeOutDateTime - loadDateTime < 5000) {
+                    window.location = "..."; //ios下载地址
+                } else {
+                    window.close();
+                }
+            }, 500);
+
+        } else if (navigator.userAgent.match(/android/i)) {
+            var state = null;
+            try {
+                window.location = '...'; //schema链接或者universal link
+                window.setTimeout(function() {
+                    window.location = "..."; //android下载地址
+                }, 500);
+            } catch (e) {}
+        }
     }
 }
 
