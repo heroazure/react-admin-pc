@@ -32,10 +32,14 @@ class Store {
     surpriseCode = ''
     surpriseResult = {}
     onSubmit = async () => {
-        const {data, code, message} = await Api.redeemCode({
+        const params = {
             ...this.getParams(),
             surpriseCode: this.surpriseCode
-        })
+        }
+        if (!params.token) {
+            return this.handleUnLogin()
+        }
+        const {data, code, message} = await Api.redeemCode(params)
         if (code !== 200) {
             // 未登陆的情况
             if (code === 1009) {
@@ -67,7 +71,14 @@ class Store {
     recordList = []
     // 获取兑换记录
     getRecordList = async () => {
-        const {data, code, message} = await Api.queryUserSurpriseList({...this.getParams(), userId: '111'})
+        const params = {
+            ...this.getParams(),
+            userId: '111'
+        }
+        if (!params.token) {
+            return this.handleUnLogin()
+        }
+        const {data, code, message} = await Api.queryUserSurpriseList(params)
         if (code !== 200) {
             // 未登陆的情况
             if (code === 1009) {
