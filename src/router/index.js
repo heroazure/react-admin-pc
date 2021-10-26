@@ -15,7 +15,7 @@ export default function RouterView() {
                 <Route exact path="/blindbox">
                     <BlindBox/>
                 </Route>
-                <Route path="/download/:language">
+                <Route path="/download/:language?">
                     <Download/>
                 </Route>
                 <Route path="*">

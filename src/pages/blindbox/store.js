@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx'
+import {makeAutoObservable, toJS} from 'mobx'
 import {Toast} from "antd-mobile"
 import {v4} from 'uuid'
 import Api from './Api'
@@ -102,7 +102,7 @@ class Store {
         } catch (e) {
             this.userInfo = {}
         }
-        Toast.info(res, 5)
+        // Toast.info(res, 5)
         // window.getUserInfo = (res) => {
         //     this.userInfo = JSON.parse(res)
         //     Toast.info('countryId:' + this.userInfo.countryId, 5)
@@ -111,7 +111,10 @@ class Store {
 
     showMyPrice = false
     onClickMyPrice = async () => {
-        const params = this.getParams()
+        const params = {
+            ...this.getParams()
+        }
+        // Toast.info('params.token:' + params.token, 5)
         if (!params.token) {
             return this.handleUnLogin()
         }
@@ -146,10 +149,10 @@ class Store {
         if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
             var loadDateTime = new Date();
             window.location = "chicpoint://";//schema链接或者universal link
-            window.setTimeout(function() { //如果没有安装app,便会执行setTimeout跳转下载页
+            window.setTimeout(() => { //如果没有安装app,便会执行setTimeout跳转下载页
                 var timeOutDateTime = new Date();
                 if (timeOutDateTime - loadDateTime < 5000) {
-                    window.$history.push('/download')
+                    window.$history.push('/download/' + this.search.languageId || '')
                 } else {
                     window.close();
                 }
@@ -159,8 +162,8 @@ class Store {
             var state = null;
             try {
                 window.location = 'chicpoint://'; // schema链接或者universal link
-                window.setTimeout(function() {
-                    window.$history.push('/download')
+                window.setTimeout(() => {
+                    window.$history.push('/download/' + this.search.languageId || '')
                 }, 500);
             } catch (e) {}
         }
