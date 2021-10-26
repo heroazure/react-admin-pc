@@ -53,6 +53,10 @@ export default observer(() => {
             <Swiper
                 style={{'--swiper-navigation-color': '#fff','--swiper-pagination-color': '#fff'}}
                 loop={true}
+                autoplay={{
+                    delay: 2500,
+                    disableOnInteraction: false
+                }}
                 spaceBetween={60}
                 centeredSlides={true}
                 slidesPerView={2}
@@ -71,6 +75,10 @@ export default observer(() => {
             <Swiper
                 onSwiper={setThumbsSwiper}
                 loop={true}
+                autoplay={{
+                    delay: 2500,
+                    disableOnInteraction: false
+                }}
                 spaceBetween={10}
                 centeredSlides={true}
                 slidesPerView={6}

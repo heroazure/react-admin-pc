@@ -36,7 +36,7 @@ export default {
     // 获取广告位
     getAdByCode (data) {
         return http({
-            url: '/common/getAdByCode',
+            url: '/api/v1/blindBox/getAdByCode',
             method: 'post',
             data
         })
