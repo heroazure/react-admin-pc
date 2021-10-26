@@ -75,9 +75,6 @@ class Store {
             ...this.getParams(),
             userId: '111'
         }
-        if (!params.token) {
-            return this.handleUnLogin()
-        }
         const {data, code, message} = await Api.queryUserSurpriseList(params)
         if (code !== 200) {
             // 未登陆的情况
@@ -114,6 +111,10 @@ class Store {
 
     showMyPrice = false
     onClickMyPrice = async () => {
+        const params = this.getParams()
+        if (!params.token) {
+            return this.handleUnLogin()
+        }
         this.showMyPrice = true
         await this.getRecordList()
     }
