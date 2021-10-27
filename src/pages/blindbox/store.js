@@ -9,9 +9,6 @@ class Store {
         makeAutoObservable(this)
     }
 
-    images = [
-        xbox,xbox,xbox,xbox,xbox,xbox,xbox,xbox,xbox,xbox
-    ]
     surpriseList = []
     isSupport = true
     descImg = ''
@@ -21,7 +18,6 @@ class Store {
         this.isSupport = data.isSupport !== 0
         this.surpriseList = data.surpriseList || []
         this.descImg = data.imageUrl
-        console.log('getBlindBoxConfig:', data)
     }
 
     showSurprise = false
@@ -72,8 +68,7 @@ class Store {
     // 获取兑换记录
     getRecordList = async () => {
         const params = {
-            ...this.getParams(),
-            userId: '111'
+            ...this.getParams()
         }
         const {data, code, message} = await Api.queryUserSurpriseList(params)
         if (code !== 200) {
