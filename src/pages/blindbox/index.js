@@ -139,7 +139,7 @@ export default observer(() => {
                                 </div>
                             </div>
                             <div className='price-item-right'>
-                                <div className='price-item-right__btn'>USE IT</div>
+                                <div className='price-item-right__btn' onClick={() => onClickToNative('toCart')}>USE IT</div>
                                 <p>Available before</p>
                                 <p>1/1/2022</p>
                             </div>
