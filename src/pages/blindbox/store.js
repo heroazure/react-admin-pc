@@ -150,27 +150,46 @@ class Store {
 
     // 跳转app/下载页
     toAppOrDownload = () => {
-        if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
-            var loadDateTime = new Date();
-            window.location = "chicpoint://";//schema链接或者universal link
-            window.setTimeout(() => { //如果没有安装app,便会执行setTimeout跳转下载页
-                var timeOutDateTime = new Date();
-                if (timeOutDateTime - loadDateTime < 5000) {
-                    window.$history.push('/download/' + this.search.languageId || '')
-                } else {
-                    window.close();
-                }
-            }, 500);
+        window.location.href = 'chicpoint://'
+        const timer = setTimeout(() => {
+            window.$history.push('/download/' + this.search.languageId || '')
+        }, 2500)
 
-        } else if (navigator.userAgent.match(/android/i)) {
-            var state = null;
-            try {
-                window.location = 'chicpoint://'; // schema链接或者universal link
-                window.setTimeout(() => {
-                    window.$history.push('/download/' + this.search.languageId || '')
-                }, 500);
-            } catch (e) {}
+        const visibilitychange = function() {
+            const tag = document.hidden || document.webkitHidden
+            tag && clearTimeout(timer)
         }
+
+        document.addEventListener("visibilitychange", visibilitychange, false)
+        document.addEventListener("webkitvisibilitychange", visibilitychange, false)
+        window.addEventListener(
+            "pagehide",
+            function() {
+                clearTimeout(timer)
+            },
+            false
+        )
+        // if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
+        //     var loadDateTime = new Date();
+        //     window.location = "chicpoint://";//schema链接或者universal link
+        //     window.setTimeout(() => { //如果没有安装app,便会执行setTimeout跳转下载页
+        //         var timeOutDateTime = new Date();
+        //         if (timeOutDateTime - loadDateTime < 5000) {
+        //             window.$history.push('/download/' + this.search.languageId || '')
+        //         } else {
+        //             window.close();
+        //         }
+        //     }, 500);
+        //
+        // } else if (navigator.userAgent.match(/android/i)) {
+        //     var state = null;
+        //     try {
+        //         window.location = 'chicpoint://'; // schema链接或者universal link
+        //         window.setTimeout(() => {
+        //             window.$history.push('/download/' + this.search.languageId || '')
+        //         }, 500);
+        //     } catch (e) {}
+        // }
     }
 }
 
