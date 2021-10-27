@@ -1,0 +1,98 @@
+
+
+html, body, #app {
+  width: 100%;
+  overflow: hidden;
+}
+
+#app {
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  color: #999;
+}
+.time {
+  width: 35%;
+  font-size: 13px;
+}
+.line {
+  width: 40px;
+  height: 70px;
+  line-height: 100px;
+  vertical-align: middle;
+  display: inline-block;
+  position: relative;
+}
+.line i {
+  display: inline-block;
+
+  position: absolute;
+  top: 29px;
+  left: 13px;
+
+  width: 13px;
+  height: 13px;
+  line-height: 13px;
+
+  border-radius: 50%;
+  background-color: #999;
+  color: #fff;
+  font-size: 10px;
+  z-index: 9999;
+  font-style: normal;
+}
+.line::after {
+  width: 1px;
+  height: 100%;
+  content: '    ';
+  background: repeating-linear-gradient(#fff, #fff 5%, #999 5.1%, #999 10%);
+
+  position: absolute;
+  left: calc(50% - 1px);
+
+}
+.time, .line {
+  text-align: center;
+}
+.msg {
+  flex: 1;
+  font-size: 13px;
+}
+
+.current {
+  color: #333;
+}
+.current .line i {
+  display: inline-block;
+
+  position: absolute;
+  top: 25px;
+  left: 10px;
+
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+
+  border-radius: 50%;
+  background-color: #FF4C19;
+  color: #000;
+  font-size: 16px;
+  z-index: 9999;
+  font-style: normal;
+}
+.current .line::after {
+  height: 50%;
+  bottom: 0;
+  background: repeating-linear-gradient(#fff, #fff 10%, #999 10.1%, #999 20%);
+}
+
+.tips {
+  text-align: center;
+  height: 70vh;
+  line-height: 60vh;
+  color: #666;
+}
