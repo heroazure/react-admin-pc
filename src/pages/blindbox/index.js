@@ -26,7 +26,7 @@ SwiperCore.use([Navigation,Thumbs])
 export default observer(() => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null)
     const {surpriseList, showSurprise, recordList, barrageList, descImg, adList, singleImg, surpriseResult,
-        isSupport, surpriseCode, showMyPrice, toggleMyPrice, onClickMyPrice,
+        isSupport, surpriseCode, showMyPrice, toggleMyPrice, onClickMyPrice, onClickToNative,
         onSubmit, onCloseSurprise, setSearch, onChangeCode, initUserInfo} = store
     const location = useLocation()
     const search = new URLSearchParams(location.search)
@@ -105,13 +105,13 @@ export default observer(() => {
                     className="adSwiper">
                     {adList.map((item, index) => (
                         <SwiperSlide key={index}>
-                            <img src={item.adImgUrl} alt={item.title}/>
+                            <img onClick={() => onClickToNative(item.pageUrl)} src={item.adImgUrl} alt={item.title}/>
                         </SwiperSlide>
                     ))}
                 </Swiper>
             </div>singleImg
             <div className='adSwiper-wrap'>
-                <img src={singleImg.adImgUrl} alt={singleImg.title}/>
+                <img src={singleImg.adImgUrl} onClick={() => onClickToNative(singleImg.pageUrl)} alt={singleImg.title}/>
             </div>
             <div className='desc-pane'>
                 <img src={descImg} alt='描述'/>

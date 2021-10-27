@@ -139,6 +139,15 @@ class Store {
         }
     }
 
+    onClickToNative = (url) => {
+        // 在app内的情况，调用原生交互跳原生页面
+        if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.toNativePage) {
+            window.webkit.messageHandlers.toNativePage.postMessage(url)
+        } else {
+            this.toAppOrDownload()
+        }
+    }
+
     // 跳转app/下载页
     toAppOrDownload = () => {
         if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
