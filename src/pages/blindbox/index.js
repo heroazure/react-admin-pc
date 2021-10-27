@@ -54,7 +54,7 @@ export default observer(() => {
                 style={{'--swiper-navigation-color': '#fff','--swiper-pagination-color': '#fff'}}
                 loop={true}
                 autoplay={{
-                    delay: 2500,
+                    delay: 3000,
                     disableOnInteraction: false
                 }}
                 spaceBetween={60}
@@ -76,7 +76,7 @@ export default observer(() => {
                 onSwiper={setThumbsSwiper}
                 loop={true}
                 autoplay={{
-                    delay: 2500,
+                    delay: 3000,
                     disableOnInteraction: false
                 }}
                 spaceBetween={10}

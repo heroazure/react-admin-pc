@@ -132,8 +132,10 @@ class Store {
 
     handleUnLogin = () => {
         // 在app内的情况，调用原生交互跳原生登陆页面
-        if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.toLogin) {
+        if (this.isIos()) {
             window.webkit.messageHandlers.toLogin.postMessage('toLogin')
+        } else if (this.isAndorid()) {
+            window.$App.toLogin('toLogin')
         } else {
             this.toAppOrDownload()
         }
@@ -141,11 +143,21 @@ class Store {
 
     onClickToNative = (url) => {
         // 在app内的情况，调用原生交互跳原生页面
-        if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.toNativePage) {
+        if (this.isIos()) {
             window.webkit.messageHandlers.toNativePage.postMessage(url)
+        } else if (this.isAndorid()) {
+            window.$App.toNativePage(url)
         } else {
             this.toAppOrDownload()
         }
+    }
+
+    isIos = () => {
+        return window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.toLogin
+    }
+
+    isAndorid = () => {
+        return window.$App && window.$App.toLogin
     }
 
     // 跳转app/下载页
