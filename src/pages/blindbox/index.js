@@ -25,7 +25,7 @@ SwiperCore.use([Navigation,Thumbs])
 
 export default observer(() => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null)
-    const {surpriseList, showSurprise, recordList, barrageList, descImg, adList, singleImg, surpriseResult,
+    const {surpriseList, showSurprise, recordList, barrageList, descImg, adList, surpriseResult, headImg, remindTitle,
         isSupport, surpriseCode, showMyPrice, toggleMyPrice, onClickMyPrice, onClickToNative,
         onSubmit, onCloseSurprise, setSearch, onChangeCode, initUserInfo} = store
     const location = useLocation()
@@ -42,16 +42,28 @@ export default observer(() => {
     }, [])
     if (!isSupport) {
         return <div className='surprise-container'>
-            <Empty />
+            <Empty headImg={headImg} sorryText={remindTitle} />
+            <div className='adSwiper-wrap adSwiper-wrap-empty'>
+                <Swiper
+                    loop={true}
+                    navigation={false}
+                    className="adSwiper">
+                    {adList.map((item, index) => (
+                        <SwiperSlide key={index}>
+                            <img onClick={() => onClickToNative(item.pageUrl)} src={item.adImgUrl} alt={item.title}/>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            </div>
         </div>
     }
     return (
         <div className='surprise-container'>
-            <div className='barrage-pane'>
+            <div className='barrage-pane' style={{backgroundImage: `url(${headImg})`}}>
                 <Barrage data={barrageList} />
             </div>
             <Swiper
-                style={{'--swiper-navigation-color': '#fff','--swiper-pagination-color': '#fff'}}
+                thumbs={{ swiper: thumbsSwiper }}
                 loop={true}
                 autoplay={{
                     delay: 3000,
@@ -60,9 +72,8 @@ export default observer(() => {
                 spaceBetween={60}
                 centeredSlides={true}
                 slidesPerView={2}
-                initialSlide={1}
+                initialSlide={2}
                 navigation={false}
-                thumbs={{ swiper: thumbsSwiper }}
                 className="bigSwiper">
                 {surpriseList.map((item, index) => (
                     <SwiperSlide key={index}>
@@ -82,9 +93,7 @@ export default observer(() => {
                 spaceBetween={10}
                 centeredSlides={true}
                 slidesPerView={6}
-                initialSlide={2}
-                freeMode={true}
-                watchSlidesProgress={true}
+                initialSlide={3}
                 navigation={false}
                 className="smallSwiper">
                 {surpriseList.map((item, index) => (
@@ -100,6 +109,7 @@ export default observer(() => {
             </div>
             <div className='adSwiper-wrap'>
                 <Swiper
+                    autoplay={true}
                     loop={true}
                     navigation={false}
                     className="adSwiper">
@@ -109,10 +119,10 @@ export default observer(() => {
                         </SwiperSlide>
                     ))}
                 </Swiper>
-            </div>singleImg
-            <div className='adSwiper-wrap'>
-                <img src={singleImg.adImgUrl} onClick={() => onClickToNative(singleImg.pageUrl)} alt={singleImg.title}/>
             </div>
+            {/*<div className='adSwiper-wrap'>
+                <img src={singleImg.adImgUrl} onClick={() => onClickToNative(singleImg.pageUrl)} alt={singleImg.title}/>
+            </div>*/}
             <div className='desc-pane'>
                 <img src={descImg} alt='描述'/>
             </div>

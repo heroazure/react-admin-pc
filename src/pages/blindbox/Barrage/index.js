@@ -4,28 +4,26 @@ import {v4} from 'uuid'
 import './style.less'
 // import 'antd-mobile/lib/modal/style/index.less'
 
-const defaultList = [
-    {content: '我是内容1', id: v4()},
-    {content: '我是内容2', id: v4()},
-    {content: '我是内容3', id: v4()},
-    {content: '我是内容4我是内容4', id: v4()},
-]
 let step = 1
-const num = 3
+const num = 2
 let copyListUniq = []
 export default function ({data}) {
     const [list, setList] = useState([])
     useEffect(() => {
         step = 1
-        copyListUniq = data || defaultList
+        copyListUniq = data || []
         setList(copyListUniq.slice(0, num))
     }, [data])
     useEffect(() => {
         const inter = setInterval(() => {
             let lt = copyListUniq.slice(step, step + num)
-            if (!lt.length) {
-                step = 1
-                lt = copyListUniq.slice(0, num)
+            if (lt.length < num) {
+                if (lt.length === 0) {
+                    step = 1
+                } else {
+                    step++
+                }
+                lt = [...lt, ...copyListUniq.slice(0, num - lt.length)]
             } else {
                 step++
             }
