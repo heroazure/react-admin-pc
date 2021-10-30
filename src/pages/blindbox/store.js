@@ -13,14 +13,22 @@ class Store {
     descImg = ''
     headImg = ''
     remindTitle = ''
+    myPrizeTran = ''
+    redeemTran = ''
+    inputTran = ''
     getBlindBoxConfig = async () => {
         const {data} = await Api.getBlindBoxConfig(this.getParams())
         window.document.title = data?.title || ''
         this.isSupport = data.isSupport !== 0
-        this.surpriseList = data.surpriseList || []
+        this.surpriseList = (data.surpriseList || []).map(item => {
+            return {...item, surpriseName: item.surpriseName.slice(0, 32)}
+        })
         this.descImg = data.imageUrl
         this.headImg = data.headImg
         this.remindTitle = data.remindTitle
+        this.myPrizeTran = data.myPrizeTran
+        this.redeemTran = data.redeemTran
+        this.inputTran = data.inputTran
     }
 
     showSurprise = false

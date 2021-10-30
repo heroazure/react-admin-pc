@@ -26,6 +26,7 @@ SwiperCore.use([Navigation,Thumbs])
 export default observer(() => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null)
     const {surpriseList, showSurprise, recordList, barrageList, descImg, adList, surpriseResult, headImg, remindTitle,
+        myPrizeTran, redeemTran, inputTran,
         isSupport, surpriseCode, showMyPrice, toggleMyPrice, onClickMyPrice, onClickToNative,
         onSubmit, onCloseSurprise, setSearch, onChangeCode, initUserInfo} = store
     const location = useLocation()
@@ -62,7 +63,7 @@ export default observer(() => {
             <div className='barrage-pane' style={{backgroundImage: `url(${headImg})`}}>
                 <Barrage data={barrageList} />
             </div>
-            <Swiper
+            {!!surpriseList.length && <Swiper
                 thumbs={{ swiper: thumbsSwiper }}
                 loop={true}
                 autoplay={{
@@ -82,8 +83,8 @@ export default observer(() => {
                         <span className='bigSwiper__surName'>{item.surpriseName}</span>
                     </SwiperSlide>
                 ))}
-            </Swiper>
-            <Swiper
+            </Swiper>}
+            {!!surpriseList.length && <Swiper
                 onSwiper={setThumbsSwiper}
                 loop={true}
                 autoplay={{
@@ -101,11 +102,11 @@ export default observer(() => {
                         <img className='smallSwiper__bg' src={item.surpriseImg} alt={item.surpriseName} />
                     </SwiperSlide>
                 ))}
-            </Swiper>
-            <input type='text' placeholder='Input Surprise Code' value={surpriseCode} onChange={onChangeCode} className='surprise-input' />
+            </Swiper>}
+            <input type='text' placeholder={inputTran} value={surpriseCode} onChange={onChangeCode} className='surprise-input' />
             <div className='surprise-submit-pane'>
-                <button className='surprise-submit' onClick={onSubmit}>REDEEM</button>
-                <span className='surprise-submit-price' onClick={onClickMyPrice}>My Price></span>
+                <button className='surprise-submit' onClick={onSubmit}>{redeemTran}</button>
+                <span className='surprise-submit-price' onClick={onClickMyPrice}>{myPrizeTran}></span>
             </div>
             <div className='adSwiper-wrap'>
                 <Swiper
