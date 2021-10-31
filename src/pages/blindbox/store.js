@@ -65,7 +65,7 @@ class Store {
                     {
                         text: 'Ok',
                         onPress: () => {
-                            //this.toDownload()
+                            this.toDownload()
                         }
                     },
                 ])
@@ -112,7 +112,7 @@ class Store {
                     {
                         text: 'Ok',
                         onPress: () => {
-                            // this.toDownload()
+                            this.toDownload()
                         }
                     },
                 ])
