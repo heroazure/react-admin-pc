@@ -1,4 +1,7 @@
 import http from '@/common/http'
+http.setConfig({
+    baseURL: '/ii'
+})
 
 export default {
     // 获取盲盒配置信息
