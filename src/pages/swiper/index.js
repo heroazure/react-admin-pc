@@ -1,8 +1,9 @@
 import React, { useRef, useState } from "react";
 // Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react/";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
+import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
 import "./styles.css";
 
