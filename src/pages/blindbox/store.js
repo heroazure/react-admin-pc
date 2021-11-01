@@ -1,8 +1,7 @@
 import {makeAutoObservable, toJS} from 'mobx'
-import {Toast} from "antd-mobile"
+import {Toast, Modal} from "antd-mobile"
 import {v4} from 'uuid'
 import Api from './Api'
-import xbox from './images/xbox.png'
 class Store {
     visible = false
     constructor() {
@@ -12,17 +11,35 @@ class Store {
     surpriseList = []
     isSupport = true
     descImg = ''
+    headImg = ''
+    remindTitle = ''
+    myPrizeTran = ''
+    redeemTran = ''
+    inputTran = ''
     getBlindBoxConfig = async () => {
         const {data} = await Api.getBlindBoxConfig(this.getParams())
         window.document.title = data?.title || ''
         this.isSupport = data.isSupport !== 0
-        this.surpriseList = data.surpriseList || []
+        this.surpriseList = (data.surpriseList || []).map(item => {
+            return {...item, surpriseName: item.surpriseName.slice(0, 32)}
+        })
         this.descImg = data.imageUrl
+        this.headImg = data.headImg
+        this.remindTitle = data.remindTitle
+        this.myPrizeTran = data.myPrizeTran
+        this.redeemTran = data.redeemTran
+        this.inputTran = data.inputTran
     }
 
     showSurprise = false
     onCloseSurprise = () => {
         this.showSurprise = false
+    }
+
+    toDownload = () => {
+        const isIos = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
+        // Toast.info('isIos:' + isIos + '::' + url, 5)
+        window.location.href = isIos ? 'http://itunes.apple.com/us/app/id1525111750?mt=8' : 'http://play.google.com/store/apps/details?id=com.chic.point'
     }
 
     surpriseCode = ''
@@ -32,14 +49,26 @@ class Store {
             ...this.getParams(),
             surpriseCode: this.surpriseCode
         }
-        if (!params.token) {
-            return this.handleUnLogin()
-        }
+        // if (!params.token) {
+        //     return this.handleUnLogin()
+        // }
         const {data, code, message} = await Api.redeemCode(params)
         if (code !== 200) {
             // 未登陆的情况
             if (code === 1009) {
                 return this.handleUnLogin()
+            }
+            // 需要下载新版本
+            if (code === 1) {
+                return Modal.alert('', message || 'Please update app', [
+                    { text: 'Cancel', onPress: () => console.log('cancel') },
+                    {
+                        text: 'Ok',
+                        onPress: () => {
+                            this.toDownload()
+                        }
+                    },
+                ])
             }
             return Toast.info(message || '未知异常', 2)
         }
@@ -76,6 +105,18 @@ class Store {
             if (code === 1009) {
                 return this.handleUnLogin()
             }
+            // 需要下载新版本
+            if (code === 1) {
+                return Modal.alert('', message || 'Please update app', [
+                    { text: 'Cancel', onPress: () => console.log('cancel') },
+                    {
+                        text: 'Ok',
+                        onPress: () => {
+                            this.toDownload()
+                        }
+                    },
+                ])
+            }
             return Toast.info(message || '未知异常', 2)
         }
         this.recordList = (data || [])
@@ -97,33 +138,27 @@ class Store {
         } catch (e) {
             this.userInfo = {}
         }
-        // Toast.info(res, 5)
-        // window.getUserInfo = (res) => {
-        //     this.userInfo = JSON.parse(res)
-        //     Toast.info('countryId:' + this.userInfo.countryId, 5)
-        // }
     }
 
     showMyPrice = false
     onClickMyPrice = async () => {
-        const params = {
-            ...this.getParams()
-        }
-        // Toast.info('params.token:' + params.token, 5)
-        if (!params.token) {
-            return this.handleUnLogin()
-        }
+        // const params = {
+        //     ...this.getParams()
+        // }
+        // if (!params.token) {
+        //     return this.handleUnLogin()
+        // }
         this.showMyPrice = true
         await this.getRecordList()
     }
 
     adList = []
-    singleImg = {}
+    // singleImg = {}
     getAdByCode = async () => {
         const res1 = await Api.getAdByCode({...this.getParams(), code: 'SIBone'})
         this.adList = res1.data || []
-        const res2 = await Api.getAdByCode({...this.getParams(), code: 'SIBtwo'})
-        this.singleImg = res2.data[0] || {}
+        // const res2 = await Api.getAdByCode({...this.getParams(), code: 'SIBtwo'})
+        // this.singleImg = res2.data[0] || {}
     }
 
     toggleMyPrice = () => {
@@ -152,10 +187,12 @@ class Store {
         }
     }
 
+    // 只有当新版app，才有这个方法，但不是用来单纯判断iOS设备
     isIos = () => {
         return window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.toLogin
     }
 
+    // 只有当新版app，才有这个方法，但不是用来单纯判断安卓设备
     isAndorid = () => {
         return window.$App && window.$App.toLogin
     }

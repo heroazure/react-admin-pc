@@ -25,7 +25,8 @@ SwiperCore.use([Navigation,Thumbs])
 
 export default observer(() => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null)
-    const {surpriseList, showSurprise, recordList, barrageList, descImg, adList, singleImg, surpriseResult,
+    const {surpriseList, showSurprise, recordList, barrageList, descImg, adList, surpriseResult, headImg, remindTitle,
+        myPrizeTran, redeemTran, inputTran,
         isSupport, surpriseCode, showMyPrice, toggleMyPrice, onClickMyPrice, onClickToNative,
         onSubmit, onCloseSurprise, setSearch, onChangeCode, initUserInfo} = store
     const location = useLocation()
@@ -42,63 +43,8 @@ export default observer(() => {
     }, [])
     if (!isSupport) {
         return <div className='surprise-container'>
-            <Empty />
-        </div>
-    }
-    return (
-        <div className='surprise-container'>
-            <div className='barrage-pane'>
-                <Barrage data={barrageList} />
-            </div>
-            <Swiper
-                style={{'--swiper-navigation-color': '#fff','--swiper-pagination-color': '#fff'}}
-                loop={true}
-                autoplay={{
-                    delay: 3000,
-                    disableOnInteraction: false
-                }}
-                spaceBetween={60}
-                centeredSlides={true}
-                slidesPerView={2}
-                initialSlide={1}
-                navigation={false}
-                thumbs={{ swiper: thumbsSwiper }}
-                className="bigSwiper">
-                {surpriseList.map((item, index) => (
-                    <SwiperSlide key={index}>
-                        <img className='bigSwiper__bg' src={xbox} alt='奖品图' />
-                        <img className='bigSwiper__surImg' src={item.surpriseImg} alt={item.surpriseName}/>
-                        <span className='bigSwiper__surName'>{item.surpriseName}</span>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
-            <Swiper
-                onSwiper={setThumbsSwiper}
-                loop={true}
-                autoplay={{
-                    delay: 3000,
-                    disableOnInteraction: false
-                }}
-                spaceBetween={10}
-                centeredSlides={true}
-                slidesPerView={6}
-                initialSlide={2}
-                freeMode={true}
-                watchSlidesProgress={true}
-                navigation={false}
-                className="smallSwiper">
-                {surpriseList.map((item, index) => (
-                    <SwiperSlide key={index}>
-                        <img className='smallSwiper__bg' src={item.surpriseImg} alt={item.surpriseName} />
-                    </SwiperSlide>
-                ))}
-            </Swiper>
-            <input type='text' placeholder='Input Surprise Code' value={surpriseCode} onChange={onChangeCode} className='surprise-input' />
-            <div className='surprise-submit-pane'>
-                <button className='surprise-submit' onClick={onSubmit}>REDEEM</button>
-                <span className='surprise-submit-price' onClick={onClickMyPrice}>My Price></span>
-            </div>
-            <div className='adSwiper-wrap'>
+            <Empty headImg={headImg} sorryText={remindTitle} />
+            <div className='adSwiper-wrap adSwiper-wrap-empty'>
                 <Swiper
                     loop={true}
                     navigation={false}
@@ -109,10 +55,75 @@ export default observer(() => {
                         </SwiperSlide>
                     ))}
                 </Swiper>
-            </div>singleImg
-            <div className='adSwiper-wrap'>
-                <img src={singleImg.adImgUrl} onClick={() => onClickToNative(singleImg.pageUrl)} alt={singleImg.title}/>
             </div>
+        </div>
+    }
+    return (
+        <div className='surprise-container'>
+            <div className='barrage-pane' style={{backgroundImage: `url(${headImg})`}}>
+                <Barrage data={barrageList} />
+            </div>
+            {!!surpriseList.length && <Swiper
+                thumbs={{ swiper: thumbsSwiper }}
+                loop={true}
+                autoplay={{
+                    delay: 3000,
+                    disableOnInteraction: false
+                }}
+                spaceBetween={60}
+                centeredSlides={true}
+                slidesPerView={2}
+                initialSlide={0}
+                navigation={false}
+                className="bigSwiper">
+                {surpriseList.map((item, index) => (
+                    <SwiperSlide key={index}>
+                        <img className='bigSwiper__bg' src={xbox} alt='奖品图' />
+                        <img className='bigSwiper__surImg' src={item.surpriseImg} alt={item.surpriseName}/>
+                        <span className='bigSwiper__surName'>{item.surpriseName}</span>
+                    </SwiperSlide>
+                ))}
+            </Swiper>}
+            {!!surpriseList.length && <Swiper
+                onSwiper={setThumbsSwiper}
+                loop={true}
+                autoplay={{
+                    delay: 3000,
+                    disableOnInteraction: false
+                }}
+                spaceBetween={10}
+                centeredSlides={true}
+                slidesPerView={6}
+                initialSlide={0}
+                navigation={false}
+                className="smallSwiper">
+                {surpriseList.map((item, index) => (
+                    <SwiperSlide key={index}>
+                        <img className='smallSwiper__bg' src={item.surpriseImg} alt={item.surpriseName} />
+                    </SwiperSlide>
+                ))}
+            </Swiper>}
+            <input type='text' placeholder={inputTran} value={surpriseCode} onChange={onChangeCode} className='surprise-input' />
+            <div className='surprise-submit-pane'>
+                <button className='surprise-submit' onClick={onSubmit}>{redeemTran}</button>
+                <span className='surprise-submit-price' onClick={onClickMyPrice}>{myPrizeTran}></span>
+            </div>
+            <div className='adSwiper-wrap'>
+                <Swiper
+                    autoplay={true}
+                    loop={true}
+                    navigation={false}
+                    className="adSwiper">
+                    {adList.map((item, index) => (
+                        <SwiperSlide key={index}>
+                            <img onClick={() => onClickToNative(item.pageUrl)} src={item.adImgUrl} alt={item.title}/>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            </div>
+            {/*<div className='adSwiper-wrap'>
+                <img src={singleImg.adImgUrl} onClick={() => onClickToNative(singleImg.pageUrl)} alt={singleImg.title}/>
+            </div>*/}
             <div className='desc-pane'>
                 <img src={descImg} alt='描述'/>
             </div>
