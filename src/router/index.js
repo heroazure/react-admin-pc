@@ -10,6 +10,7 @@ const ComplexPage = lazy(() => import("../pages/complexPage"))
 const MyList = lazy(() => import("../pages/mylist"))
 const Transition = lazy(() => import("../pages/transition"))
 const Drag = lazy(() => import("../pages/drag"))
+const SwiperPage = lazy(() => import("../pages/swiper"))
 
 const NotFound = lazy(() => import("../pages/notfound"))
 
@@ -31,6 +32,9 @@ export default function RouterView() {
                 </PrivateRoute>
                 <PrivateRoute path="/drag">
                     <Drag/>
+                </PrivateRoute>
+                <PrivateRoute path="/swiper">
+                    <SwiperPage/>
                 </PrivateRoute>
                 <Route path="*">
                     <NotFound/>
