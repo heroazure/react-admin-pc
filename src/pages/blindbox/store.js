@@ -38,8 +38,9 @@ class Store {
 
     toDownload = () => {
         const isIos = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
-        // Toast.info('isIos:' + isIos + '::' + url, 5)
-        window.location.href = isIos ? 'http://itunes.apple.com/us/app/id1525111750?mt=8' : 'http://play.google.com/store/apps/details?id=com.chic.point'
+        const url = isIos ? 'http://itunes.apple.com/us/app/id1525111750?mt=8' : 'http://play.google.com/store/apps/details?id=com.chic.point'
+        Toast.info(url, 5)
+        window.location.href = url
     }
 
     surpriseCode = ''
