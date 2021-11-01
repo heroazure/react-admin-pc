@@ -5,6 +5,10 @@ import reportWebVitals from './reportWebVitals';
 import 'antd/dist/antd.less';
 import './index.less';
 import App from './App'
+import http from '@/common/http'
+http.setConfig({
+    baseURL: process.env.REACT_APP_APIBASE || ''
+})
 
 ReactDOM.render(
     <HashRouter>

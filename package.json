@@ -32,9 +32,11 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco build",
+    "build": "cross-env REACT_APP_APIBASE=/chicmall-app-api craco build",
+    "build:staging": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "serve": "serve -s blindbox"
   },
   "eslintConfig": {
     "extends": [
@@ -55,6 +57,7 @@
     ]
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "postcss-px-to-viewport": "^1.1.1",
     "sass": "^1.37.5",
     "sass-loader": "^12.1.0"

@@ -1,13 +1,10 @@
 import http from '@/common/http'
-http.setConfig({
-    baseURL: '/ii'
-})
 
 export default {
     // 获取盲盒配置信息
     getBlindBoxConfig (data) {
         return http({
-            url: '/chicmall-app-api/api/v1/blindBox/getBlindBoxConfig',
+            url: '/api/v1/blindBox/getBlindBoxConfig',
             method: 'post',
             data
         })
@@ -15,7 +12,7 @@ export default {
     // 获取用户兑换记录
     queryUserSurpriseList (data) {
         return http({
-            url: '/chicmall-app-api/api/v1/blindBox/queryUserSurpriseList',
+            url: '/api/v1/blindBox/queryUserSurpriseList',
             method: 'post',
             data
         })
@@ -23,7 +20,7 @@ export default {
     // 获取国家中奖记录
     queryRegionSurpriseList (data) {
         return http({
-            url: '/chicmall-app-api/api/v1/blindBox/queryRegionSurpriseList',
+            url: '/api/v1/blindBox/queryRegionSurpriseList',
             method: 'post',
             data
         })
@@ -31,7 +28,7 @@ export default {
     // 兑换奖项
     redeemCode (data) {
         return http({
-            url: '/chicmall-app-api/api/v1/blindBox/redeemCode',
+            url: '/api/v1/blindBox/redeemCode',
             method: 'post',
             data
         })
@@ -39,7 +36,7 @@ export default {
     // 获取广告位
     getAdByCode (data) {
         return http({
-            url: '/chicmall-app-api/api/v1/blindBox/getAdByCode',
+            url: '/api/v1/blindBox/getAdByCode',
             method: 'post',
             data
         })
