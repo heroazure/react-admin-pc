@@ -104,7 +104,7 @@ class Store {
         return obj
     }
 
-    recordList = [{},{}]
+    recordList = []
     // 获取兑换记录
     getRecordList = async () => {
         const params = {
