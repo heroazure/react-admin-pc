@@ -26,7 +26,7 @@ SwiperCore.use([Navigation,Thumbs, Autoplay])
 export default observer(() => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null)
     const {surpriseList, showSurprise, recordList, barrageList, descImg, adList, surpriseResult, headImg, remindTitle,
-        myPrizeTran, redeemTran, inputTran,
+        myPrizeTran, redeemTran, inputTran, disabledBtn,
         isSupport, surpriseCode, showMyPrice, toggleMyPrice, onClickMyPrice, onClickToNative,
         onSubmit, onCloseSurprise, setSearch, onChangeCode, initUserInfo} = store
     const location = useLocation()
@@ -105,7 +105,7 @@ export default observer(() => {
             </Swiper>}
             <input type='text' placeholder={inputTran} value={surpriseCode} onChange={onChangeCode} className='surprise-input' />
             <div className='surprise-submit-pane'>
-                <button className='surprise-submit' onClick={onSubmit}>{redeemTran}</button>
+                <button className='surprise-submit' disabled={disabledBtn} onClick={onSubmit}>{redeemTran}</button>
                 <span className='surprise-submit-price' onClick={onClickMyPrice}>{myPrizeTran}></span>
             </div>
             <div className='adSwiper-wrap'>

@@ -45,6 +45,7 @@ class Store {
 
     surpriseCode = ''
     surpriseResult = {}
+    disabledBtn = false
     onSubmit = async () => {
         const params = {
             ...this.getParams(),
@@ -53,29 +54,33 @@ class Store {
         // if (!params.token) {
         //     return this.handleUnLogin()
         // }
-        const {data, code, message} = await Api.redeemCode(params)
-        if (code !== 200) {
-            // 未登陆的情况
-            if (code === 1009) {
-                return this.handleUnLogin()
+        try {
+            this.disabledBtn = true
+            const {data, code, message} = await Api.redeemCode(params)
+            if (code !== 200) {
+                // 未登陆的情况
+                if (code === 1009) {
+                    return this.handleUnLogin()
+                }
+                // 需要下载新版本
+                if (code === 1) {
+                    return Modal.alert('', message || 'Please update app', [
+                        { text: 'Cancel', onPress: () => console.log('cancel') },
+                        {
+                            text: 'Ok',
+                            onPress: () => {
+                                this.toDownload()
+                            }
+                        },
+                    ])
+                }
+                return Toast.info(message || '未知异常', 2)
             }
-            // 需要下载新版本
-            if (code === 1) {
-                return Modal.alert('', message || 'Please update app', [
-                    { text: 'Cancel', onPress: () => console.log('cancel') },
-                    {
-                        text: 'Ok',
-                        onPress: () => {
-                            this.toDownload()
-                        }
-                    },
-                ])
-            }
-            return Toast.info(message || '未知异常', 2)
+            this.showSurprise = true
+            this.surpriseResult = data
+        } finally {
+            this.disabledBtn = false
         }
-        this.showSurprise = true
-        this.surpriseResult = data
-        // Toast.info('Your code is not recognized', 2)
     }
 
     barrageList = []
