@@ -6,14 +6,14 @@
   bottom: 0;
   background: rgba(0, 0, 0, 0.9);
   color: #fff;
-  padding-top: 50px;
+  padding-top: 1px;
   z-index: 1000;
   text-align: center;
   &-content {
     height: 375px;
     width: 375px;
-    background: url("./bg2.png") no-repeat;
-    background-size: 100% 100%;
+    background: url("./bg2.png") center center no-repeat;
+    background-size: 100% auto;
     padding-top: 144px;
     position: relative;
     &__img1 {
@@ -52,8 +52,10 @@
   &__title2 {
     font-size: 14px;
     line-height: 16px;
-    margin: 10px 0 20px;
+    margin: 10px auto;
     color: rgba(255,255,255,0.4);
+    width: 80%;
+    text-align: center;
   }
   &__btn {
     display: inline-block;
