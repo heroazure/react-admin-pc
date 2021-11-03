@@ -1,7 +1,8 @@
-import {makeAutoObservable, toJS} from 'mobx'
+import {makeAutoObservable} from 'mobx'
 import {Toast, Modal} from "antd-mobile"
 import {v4} from 'uuid'
 import Api from './Api'
+import moment from 'moment'
 class Store {
     visible = false
     constructor() {
@@ -90,16 +91,20 @@ class Store {
         this.barrageList = (data || []).map(item => ({ id: v4(), content: `${item.userName}  ${item.prizeName} * ${item.totalNumber || 1}` }))
     }
 
+    params = {}
     getParams = () => {
         const obj = {
             ...this.userInfo
         }
         if (this.search.countryId) obj.countryId = this.search.countryId
         if (this.search.languageId) obj.languageId = this.search.languageId
+        if (this.search.terminalType) obj.terminalType = this.search.terminalType
+        if (this.search.appVersion) obj.appVersion = this.search.appVersion
+        this.params = obj
         return obj
     }
 
-    recordList = []
+    recordList = [{},{}]
     // 获取兑换记录
     getRecordList = async () => {
         const params = {
@@ -125,7 +130,11 @@ class Store {
             }
             return Toast.info(message || '未知异常', 2)
         }
-        this.recordList = (data || [])
+        this.recordList = (data || []).map(item => {
+            item.expiredTime = moment(item.expiredTime).format('YYYY/MM/DD')
+            item.gmtCreated = moment(item.gmtCreated).format('YYYY/MM/DD hh:mm:ss')
+            return item
+        })
     }
 
     search = {}

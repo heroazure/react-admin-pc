@@ -178,6 +178,9 @@
   background: url("./images/button.png") no-repeat;
   background-size: 100% 100%;
   border: none;
+  &:disabled {
+    opacity: 0.5;
+  }
 }
 
 .surprise-submit-price {
@@ -198,7 +201,8 @@
 .am-modal-popup .am-modal-body {
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
-  background: linear-gradient(180deg, #FD5C59 0%, #FF3532 100%);
+  //background: linear-gradient(180deg, #FD5C59 0%, #FF3532 100%);
+  background-color: #FF5A57;
   border-top: 1px solid #FFE9C8;
   //min-height: 200px;
   //max-height: 500px;
@@ -318,4 +322,8 @@
 
 .adSwiper-wrap-empty {
   margin-top: 55px;
+}
+
+.rtl {
+  direction: rtl;
 }

@@ -32,7 +32,12 @@ export default observer(() => {
     const location = useLocation()
     const search = new URLSearchParams(location.search)
     useEffect(() => {
-        setSearch({countryId: search.get('countryId'), languageId: search.get('languageId')})
+        setSearch({
+            countryId: search.get('countryId'),
+            languageId: search.get('languageId'),
+            terminalType: search.get('terminalType'),
+            appVersion: search.get('appVersion')
+        })
         // 注入登陆基本信息
         initUserInfo(search.get('userInfo'))
     }, [])
@@ -61,7 +66,7 @@ export default observer(() => {
     return (
         <div className='surprise-container'>
             <div className='barrage-pane' style={{backgroundImage: `url(${headImg})`}}>
-                <Barrage data={barrageList} />
+                <Barrage data={barrageList} languageId={store.params.languageId} />
             </div>
             {!!surpriseList.length && <Swiper
                 thumbs={{ swiper: thumbsSwiper }}
@@ -135,24 +140,24 @@ export default observer(() => {
                 afterClose={() => { console.log('afterClose') }}
             >
                 <div className='modal-price-header'>
-                    <div className='modal-price-header__title'>My Price</div>
+                    <div className='modal-price-header__title'>My Prize</div>
                     <span><img onClick={toggleMyPrice} className='modal-price-header__close' src={close} alt="close"/></span>
                 </div>
                 <div className='modal-price-list'>
                     {!!recordList.length && recordList.map((item, index) => (
-                        <div className='price-item' key={index}>
+                        <div className={`price-item ${store.params.languageId === '1' ? 'rtl' : ''}`} key={index}>
                             <div className='price-item-left'>
                                 <div className='price-item-left__img'></div>
                                 <div className='price-item-left__cnt'>
-                                    <p className='p1'>2021/1/1 14:00:00</p>
-                                    <p className='p2'>{item.prizeName} <span>{item.availableNumber} left</span></p>
+                                    <p className='p1'>{item.gmtCreated}</p>
+                                    <p className='p2'>{item.prizeName} {item.prizeType !== 4 && <span>{item.availableNumber} left</span>}</p>
                                     <p className='p3'>Code：{item.surpriseCode}</p>
                                 </div>
                             </div>
                             <div className='price-item-right'>
-                                <div className='price-item-right__btn' onClick={() => onClickToNative('toCart')}>USE IT</div>
+                                {item.prizeType !== 4 && <div className='price-item-right__btn' onClick={() => onClickToNative('toCart')}>USE IT</div>}
                                 <p>Available before</p>
-                                <p>1/1/2022</p>
+                                <p>{item.expiredTime}</p>
                             </div>
                         </div>
                     ))}
@@ -162,7 +167,7 @@ export default observer(() => {
                     </div>}
                 </div>
             </Modal>
-            {showSurprise && <Surprise value={surpriseResult} onClose={onCloseSurprise}/>}
+            {showSurprise && <Surprise value={surpriseResult} languageId={store.params.languageId} onClose={onCloseSurprise}/>}
         </div>
     )
 })
