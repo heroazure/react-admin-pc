@@ -15,13 +15,13 @@ import Surprise from './Surprise'
 
 // import Swiper core and required modules
 import SwiperCore, {
-    Navigation, Thumbs
+    Navigation, Thumbs, Autoplay
 } from 'swiper'
 import close from "./images/close.png"
 import kong from "./images/kong.png"
 
 // install Swiper modules
-SwiperCore.use([Navigation,Thumbs])
+SwiperCore.use([Navigation,Thumbs, Autoplay])
 
 export default observer(() => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null)
