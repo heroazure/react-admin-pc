@@ -92,6 +92,7 @@ class Store {
     }
 
     params = {}
+    rtlClass = ''
     getParams = () => {
         const obj = {
             ...this.userInfo
@@ -101,6 +102,7 @@ class Store {
         if (this.search.terminalType) obj.terminalType = this.search.terminalType
         if (this.search.appVersion) obj.appVersion = this.search.appVersion
         this.params = obj
+        this.rtlClass = obj.languageId === '1' ? 'rtl' : ''
         return obj
     }
 

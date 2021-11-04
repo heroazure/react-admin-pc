@@ -2,6 +2,7 @@ import React from 'react'
 import './style.less'
 // import gift from './gift.png'
 import close from '../images/close.png'
+import store from "../store";
 export default function ({onClose, value, languageId}) {
     const map = {
         '1': 'يرجى الاتصال بخدمة العملاء للحصول على هذا المنتج المجاني.',
@@ -19,7 +20,15 @@ export default function ({onClose, value, languageId}) {
         </div>
         <div className='surprise-modal__title1'>You Got The {value.prizeName}!</div>
         <div className='surprise-modal__title2'>{map[languageId || '2']}</div>
-        <button onClick={onClose} className='surprise-modal__btn'>GOT IT</button>
+        <button onClick={onClose} className='surprise-modal__btn'>
+            {{
+                '1': 'احصل عليه',
+                '2': 'GOT IT',
+                '3': 'J\'accepte',
+                '4': 'Entendido',
+                '5': 'GOT IT',
+                '8': 'Ok',
+            }[languageId || '2']}</button>
         <img onClick={onClose} className='surprise-modal__close' src={close} alt="close"/>
     </div>
 }

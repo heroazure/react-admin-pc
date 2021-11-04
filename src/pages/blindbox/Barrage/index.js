@@ -7,7 +7,7 @@ import './style.less'
 let step = 1
 const num = 2
 let copyListUniq = []
-export default function ({data, languageId}) {
+export default function ({data, languageId, rtlClass}) {
     const [list, setList] = useState([])
     useEffect(() => {
         step = 1
@@ -31,7 +31,7 @@ export default function ({data, languageId}) {
         }, 2000)
         return () => clearInterval(inter)
     }, [])
-    return <div className={`barrage ${languageId === '1' ? 'rtl' : ''}`}>
+    return <div className={`barrage ${rtlClass}`}>
         <TransitionGroup>
             {list.map(item => (
                 <CSSTransition key={item.id} timeout={300} classNames="transition-item">
