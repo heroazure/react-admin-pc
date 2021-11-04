@@ -88,7 +88,7 @@ class Store {
     // 获取弹幕信息
     getBarrage = async () => {
         const {data} = await Api.queryRegionSurpriseList(this.getParams())
-        this.barrageList = (data || []).map(item => ({ id: v4(), content: `${item.userName}  ${item.prizeName} * ${item.totalNumber || 1}` }))
+        this.barrageList = (data || []).map(item => ({ id: v4(), content: `${item.userName}  ${item.prizeName}` }))
     }
 
     params = {}

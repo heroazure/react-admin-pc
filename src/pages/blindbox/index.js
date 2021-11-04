@@ -156,8 +156,8 @@ export default observer(() => {
                             </div>
                             <div className='price-item-right'>
                                 {item.prizeType !== 4 && <div className='price-item-right__btn' onClick={() => onClickToNative('toCart')}>USE IT</div>}
-                                <p>Available before</p>
-                                <p>{item.expiredTime}</p>
+                                {item.prizeType !== 4 && <p>Available before</p>}
+                                {item.prizeType !== 4 && <p>{item.expiredTime}</p>}
                             </div>
                         </div>
                     ))}
