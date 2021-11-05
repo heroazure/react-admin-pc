@@ -70,7 +70,7 @@ export default observer(() => {
         </div>
     }
     return (
-        <div className='surprise-container'>
+        <div className={`surprise-container ${showMyPrice ? 'hidden' : ''}`}>
             <div className='barrage-pane' style={{backgroundImage: `url(${headImg})`}}>
                 <Barrage data={barrageList} languageId={store.params.languageId} rtlClass={store.rtlClass} />
             </div>
@@ -155,17 +155,19 @@ export default observer(() => {
                             <div className='price-item-left'>
                                 <div className='price-item-left__img'></div>
                                 <div className='price-item-left__cnt'>
-                                    <p className='p1'>{item.gmtCreated}</p>
+                                    <p className='p1'>
+                                        {item.gmtCreated}
+                                        {![3,4].includes(item.prizeType) && <span>{{
+                                            '1': item.availableNumber + 'فرص متبقية ',
+                                            '2': item.availableNumber + ' left',
+                                            '3': item.availableNumber + ' restants',
+                                            '4': 'Quedan ' + item.availableNumber,
+                                            '5': item.availableNumber + ' left',
+                                            '8': item.availableNumber + ' restantes',
+                                        }[store.params.languageId || '2']}</span>}
+                                    </p>
                                     <p className='p2'>
                                         {item.prizeName}
-                                    {![3,4].includes(item.prizeType) && <span>{{
-                                        '1': item.availableNumber + 'فرص متبقية ',
-                                        '2': item.availableNumber + ' left',
-                                        '3': item.availableNumber + ' restants',
-                                        '4': 'Quedan ' + item.availableNumber,
-                                        '5': item.availableNumber + ' left',
-                                        '8': item.availableNumber + ' restantes',
-                                    }[store.params.languageId || '2']}</span>}
                                     </p>
                                     <p className='p3'>{{
                                         '1': 'الكود',

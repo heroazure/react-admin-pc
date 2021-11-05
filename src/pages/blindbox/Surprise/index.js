@@ -19,7 +19,7 @@ export default function ({onClose, value, languageId}) {
             <div className='surprise-modal-content__surprise'>SURPRISE</div>
         </div>
         <div className='surprise-modal__title1'>You Got The {value.prizeName}!</div>
-        <div className='surprise-modal__title2'>{map[languageId || '2']}</div>
+        {value.prizeType === 4 && <div className='surprise-modal__title2'>{map[languageId || '2']}</div>}
         <button onClick={onClose} className='surprise-modal__btn'>
             {{
                 '1': 'احصل عليه',

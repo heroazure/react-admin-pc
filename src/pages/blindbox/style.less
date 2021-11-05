@@ -8,6 +8,10 @@
   padding-top: 1px;
   overflow-x: hidden;
   background-color: #181818;
+  &.hidden {
+    height: 100vh;
+    overflow: hidden;
+  }
 }
 .barrage-pane {
   position: relative;
@@ -260,13 +264,6 @@
         line-height: 14px;
         color: rgba(255, 255, 255, 0.9);
         margin-bottom: 3px;
-      }
-      .p2 {
-        color: #fff;
-        font-size: 16px;
-        font-weight: bold;
-        line-height: 1;
-        margin-bottom: 3px;
         > span {
           height: 14px;
           line-height: 14px;
@@ -279,6 +276,13 @@
           font-weight: 600;
           margin: 0 4px;
         }
+      }
+      .p2 {
+        color: #fff;
+        font-size: 14px;
+        font-weight: bold;
+        line-height: 1;
+        margin-bottom: 3px;
       }
       .p3 {
         font-size: 13px;

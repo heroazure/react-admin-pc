@@ -40,7 +40,6 @@ class Store {
     toDownload = () => {
         const isIos = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
         const url = isIos ? 'http://itunes.apple.com/us/app/id1525111750?mt=8' : 'http://play.google.com/store/apps/details?id=com.chic.point'
-        Toast.info(url, 5)
         window.location.href = url
     }
 
@@ -48,6 +47,7 @@ class Store {
     surpriseResult = {}
     disabledBtn = false
     onSubmit = async () => {
+        if (!/^[a-zA-Z0-9]{1,32}$/.test(this.surpriseCode)) return
         const params = {
             ...this.getParams(),
             surpriseCode: this.surpriseCode
@@ -102,7 +102,8 @@ class Store {
         if (this.search.terminalType) obj.terminalType = this.search.terminalType
         if (this.search.appVersion) obj.appVersion = this.search.appVersion
         this.params = obj
-        this.rtlClass = obj.languageId === '1' ? 'rtl' : ''
+        this.rtlClass = +obj.languageId === 1 ? 'rtl' : ''
+        // Toast.info('userInfo.lang:' + this.userInfo.languageId + ' obj.lang:' + obj.languageId, 5)
         return obj
     }
 
