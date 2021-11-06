@@ -1,15 +1,21 @@
-import React from "react"
+import React, {useEffect} from "react"
 import {observer} from "mobx-react-lite"
 import Table from '../table'
 import store, {tableStore} from './store'
 import columns from './columns'
 import SearchBar from '@/components/SearchBar'
 import moment from 'moment'
+import momentZone from 'moment-timezone'
 import { DatePicker, Select, Button } from 'antd'
 const { Option } = Select
 const { Item } = SearchBar
 
+
 export default observer(() => {
+    useEffect(() => {
+        const tz = momentZone().tz('America/Los_Angeles').format('YYYY-MM-DD hh:mm:ss')
+        console.log('tz:', tz)
+    }, [])
     return (
         <>
             <p>uuid: {tableStore.$extraData.uuid}</p>
