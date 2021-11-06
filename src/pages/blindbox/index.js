@@ -153,7 +153,9 @@ export default observer(() => {
                     {!!recordList.length && recordList.map((item, index) => (
                         <div className={`price-item ${store.rtlClass}`} key={index}>
                             <div className='price-item-left'>
-                                <div className='price-item-left__img'>{item.prizeImg}</div>
+                                <div className='price-item-left__img'>
+                                    <img src={item.prizeImg} alt="user"/>
+                                </div>
                                 <div className='price-item-left__cnt'>
                                     <p className='p1'>
                                         {item.gmtCreated}
