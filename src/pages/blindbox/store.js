@@ -3,6 +3,7 @@ import {Toast, Modal} from "antd-mobile"
 import {v4} from 'uuid'
 import Api from './Api'
 import moment from 'moment'
+import momentZone from 'moment-timezone'
 class Store {
     visible = false
     constructor() {
@@ -134,8 +135,10 @@ class Store {
             return Toast.info(message || '未知异常', 2)
         }
         this.recordList = (data || []).map(item => {
-            item.expiredTime = moment(item.expiredTime).format('YYYY/MM/DD')
-            item.gmtCreated = moment(item.gmtCreated).format('YYYY/MM/DD hh:mm:ss')
+            // 沙特-利雅得Saudi Arabia/Riyadh  摩洛哥-拉巴特Morocco/Rabat 墨西哥-墨西哥城Mexico/Mexico City
+            item.expiredTime = momentZone(item.expiredTime).tz('America/Los_Angeles').format('YYYY/MM/DD')
+            // item.gmtCreated = moment(item.gmtCreated).format('YYYY/MM/DD HH:mm:ss')
+            item.gmtCreated = momentZone(item.gmtCreated).tz('America/Los_Angeles').format('YYYY-MM-DD HH:mm:ss')
             return item
         })
     }
