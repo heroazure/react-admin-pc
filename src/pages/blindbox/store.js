@@ -3,7 +3,6 @@ import {Toast, Modal} from "antd-mobile"
 import {v4} from 'uuid'
 import Api from './Api'
 import moment from 'moment'
-import momentZone from 'moment-timezone'
 class Store {
     visible = false
     constructor() {
@@ -48,7 +47,16 @@ class Store {
     surpriseResult = {}
     disabledBtn = false
     onSubmit = async () => {
-        if (!/^[a-zA-Z0-9]{1,32}$/.test(this.surpriseCode)) return
+        if (!/^[a-zA-Z0-9]{1,32}$/.test(this.surpriseCode)) {
+            const txt = {
+                '1': 'كود غير صحيح',
+                '2': 'Incorrect code',
+                '3': 'Code incorrect',
+                '4': 'Código incorrecto',
+                '8': 'Código incorreto',
+            }[this.params.languageId || '2']
+            return Toast.info(txt, 3)
+        }
         const params = {
             ...this.getParams(),
             surpriseCode: this.surpriseCode
@@ -108,6 +116,7 @@ class Store {
         return obj
     }
 
+    // recordList = [{prizeName: 'الكودالكودالكود', prizeType: 5, surpriseCode: '888', expiredTime: 1636206311284, gmtCreated: 1636206311284, availableNumber: 3}]
     recordList = []
     // 获取兑换记录
     getRecordList = async () => {
@@ -135,10 +144,8 @@ class Store {
             return Toast.info(message || '未知异常', 2)
         }
         this.recordList = (data || []).map(item => {
-            // 沙特-利雅得Saudi Arabia/Riyadh  摩洛哥-拉巴特Morocco/Rabat 墨西哥-墨西哥城Mexico/Mexico City
-            item.expiredTime = momentZone(item.expiredTime).tz('America/Los_Angeles').format('YYYY/MM/DD')
-            // item.gmtCreated = moment(item.gmtCreated).format('YYYY/MM/DD HH:mm:ss')
-            item.gmtCreated = momentZone(item.gmtCreated).tz('America/Los_Angeles').format('YYYY-MM-DD HH:mm:ss')
+            item.expiredTime = moment(item.expiredTime).format('YYYY/M/D')
+            item.gmtCreated = moment(item.gmtCreated).format('YYYY/M/D HH:mm:ss')
             return item
         })
     }

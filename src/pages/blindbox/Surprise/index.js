@@ -15,7 +15,7 @@ export default function ({onClose, value, languageId}) {
     return <div className='surprise-modal'>
         <div className='surprise-modal-content'>
             <img className='surprise-modal-content__img1' src={value.prizeUrl} alt="奖品"/>
-            <div className='surprise-modal-content__name'>{value.prizeName}</div>
+            <div className='surprise-modal-content__name'>{(value.prizeName || '').slice(0, 32)}</div>
             <div className='surprise-modal-content__surprise'>SURPRISE</div>
         </div>
         <div className='surprise-modal__title1'>You Got The {value.prizeName}!</div>

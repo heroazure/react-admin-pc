@@ -19,12 +19,6 @@ import SwiperCore, {
 } from 'swiper'
 import close from "./images/close.png"
 import kong from "./images/kong.png"
-import ayu from "../download/images/ayu.jpg";
-import yingyu from "../download/images/yingyu.jpg";
-import fayu from "../download/images/fayu.jpg";
-import xibanya from "../download/images/xibanya.jpg";
-import xibolai from "../download/images/xibolai.jpg";
-import putaoya from "../download/images/putaoya.jpg";
 
 // install Swiper modules
 SwiperCore.use([Navigation,Thumbs, Autoplay])
@@ -70,7 +64,7 @@ export default observer(() => {
         </div>
     }
     return (
-        <div className={`surprise-container ${showMyPrice ? 'hidden' : ''}`}>
+        <div className={`surprise-container`}>
             <div className='barrage-pane' style={{backgroundImage: `url(${headImg})`}}>
                 <Barrage data={barrageList} languageId={store.params.languageId} rtlClass={store.rtlClass} />
             </div>
@@ -160,7 +154,7 @@ export default observer(() => {
                                     <p className='p1'>
                                         {item.gmtCreated}
                                         {![3,4].includes(item.prizeType) && <span>{{
-                                            '1': item.availableNumber + 'فرص متبقية ',
+                                            '1': item.availableNumber + ' فرص متبقي ',
                                             '2': item.availableNumber + ' left',
                                             '3': item.availableNumber + ' restants',
                                             '4': 'Quedan ' + item.availableNumber,
