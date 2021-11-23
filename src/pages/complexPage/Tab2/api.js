@@ -1,4 +1,4 @@
-import http from '../../../common/http/mock'
+import http from '../../../utils/http/mock'
 
 export default {
     getList () {

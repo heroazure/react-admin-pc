@@ -1,4 +1,4 @@
-import http from '../../common/http'
+import http from '../../utils/http'
 import {v4} from 'uuid'
 
 export default {

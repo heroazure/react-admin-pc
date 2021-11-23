@@ -1,4 +1,4 @@
-import BaseTableStore from '../table/store'
+import BaseTableStore from '@/components/Table/store'
 import Api from './api'
 import {makeAutoObservable} from "mobx"
 import {v4} from 'uuid'
