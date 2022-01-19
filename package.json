@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/pro-skeleton": "^1.0.3",
     "@craco/craco": "^6.2.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "ahooks": "^3.1.5",
     "antd": "^4.16.10",
     "antv": "^0.2.2",
     "axios": "^0.21.1",

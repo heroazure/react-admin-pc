@@ -1,15 +1,41 @@
-import React, {useEffect} from "react"
+import React, {useEffect, useState} from "react"
 import {observer} from "mobx-react-lite"
 import Table from '@/components/Table'
 import store, {tableStore} from './store'
 import columns from './columns'
 import SearchBar from '@/components/SearchBar'
 import moment from 'moment'
+import Skeleton from '@ant-design/pro-skeleton'
 import { DatePicker, Select, Button } from 'antd'
+import {useMount, useMouse} from 'ahooks'
 const { Option } = Select
 const { Item } = SearchBar
 
 export default observer(() => {
+    useMount(() => {
+        console.log('useMount...')
+    })
+    useEffect(() => {
+        console.log('useEffect...')
+    }, [])
+
+    const [count, setCount] = useState(0)
+
+    let testCount = count
+    let testCount2 = count
+    const state = useMouse()
+    const onClick = () => {
+        setCount(Math.random())
+    }
+    useEffect(() => {
+        console.log('testCount2:', testCount2)
+    }, [testCount2])
+    useEffect(() => {
+        console.log('testCount:', testCount)
+    }, [testCount])
+    useEffect(() => {
+        // console.log('useEffect state:', state)
+    }, [state])
     return (
         <>
             <p>uuid: {tableStore.$extraData.uuid}</p>
@@ -33,6 +59,8 @@ export default observer(() => {
                 </Item>
             </SearchBar>
             <Table store={tableStore} columns={columns} rowKey={'key'} />
+            <Button onClick={onClick}>测试</Button>
+            {tableStore.$loading && <Skeleton type="result" />}
         </>
     )
 })
