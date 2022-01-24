@@ -6,10 +6,13 @@ import columns from './columns'
 import SearchBar from '@/components/SearchBar'
 import moment from 'moment'
 import Skeleton from '@ant-design/pro-skeleton'
-import { DatePicker, Select, Button } from 'antd'
+import {DatePicker, Select, Button, Form} from 'antd'
 import {useMount, useMouse} from 'ahooks'
-const { Option } = Select
-const { Item } = SearchBar
+import styles from './style.module.scss'
+import Process from '@/utils/learn/process'
+
+const {Option} = Select
+const {Item} = SearchBar
 
 export default observer(() => {
     useMount(() => {
@@ -25,7 +28,8 @@ export default observer(() => {
     let testCount2 = count
     const state = useMouse()
     const onClick = () => {
-        setCount(Math.random())
+        new Process("test").immediateFn().firstSleep(3).sleep(5).eat("dinner").immediateFn()
+        // setCount(Math.random())
     }
     useEffect(() => {
         console.log('testCount2:', testCount2)
@@ -36,6 +40,25 @@ export default observer(() => {
     useEffect(() => {
         // console.log('useEffect state:', state)
     }, [state])
+
+    // const [searchObject, setSearchObject] = useState({})
+    // const getList = () => {
+    //     queryZhuFengScore({
+    //         ...data,
+    //         ...searchObject
+    //     }).then((res) => {
+    //         console.log('res.data:', res.data)
+    //         const list = res.data.map(item => {
+    //             item.uuid = v4()
+    //             return item
+    //         })
+    //         setDataSource(list)
+    //         // setDataSource(res.data)
+    //     })
+    // }
+    // useEffect(() => {
+    //     getList()
+    // }, [])
     return (
         <>
             <p>uuid: {tableStore.$extraData.uuid}</p>
@@ -43,13 +66,13 @@ export default observer(() => {
             <SearchBar
                 store={tableStore}
                 triggerSearchItems={['date', 'status']}
-                initialValues={{ status: '', date: moment().subtract(1, 'day') }}
+                initialValues={{status: '', date: moment().subtract(1, 'day')}}
             >
                 <Item label="日期" name="date">
-                    <DatePicker style={{ width: 200 }} />
+                    <DatePicker style={{width: 200}}/>
                 </Item>
                 <Item label="计划状态" name="status">
-                    <Select style={{ width: 200 }}>
+                    <Select style={{width: 200}}>
                         <Option value="">全部</Option>
                         <Option value="0">待预约</Option>
                         <Option value="1">已预约</Option>
@@ -58,9 +81,29 @@ export default observer(() => {
                     </Select>
                 </Item>
             </SearchBar>
-            <Table store={tableStore} columns={columns} rowKey={'key'} />
+            <Table store={tableStore} columns={columns} rowKey={'key'}/>
             <Button onClick={onClick}>测试</Button>
-            {tableStore.$loading && <Skeleton type="result" />}
+            {/*{tableStore.$loading && <Skeleton type="result" />}*/}
+            <div className={styles.container}>
+                <div className={styles.list}></div>
+                <div className={styles.list}></div>
+                <div className={styles.list}></div>
+                <div className={styles.list}></div>
+                <div className={styles.list}></div>
+                <div className={styles.list}></div>
+                <div className={styles.list}></div>
+            </div>
+            {/*<Form
+            onFinish={(data) => {
+                const finalData = {
+                    ...data,
+                    scoreDate: '省略'
+                }
+                setSearchObject(finalData)
+                getList()
+            }}>
+
+            </Form>*/}
         </>
     )
 })
